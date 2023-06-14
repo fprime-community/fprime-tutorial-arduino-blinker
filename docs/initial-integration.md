@@ -1,0 +1,71 @@
+# LED Blinker: Initial Component Integration
+
+In this section, users will create a deployment and perform the initial integration the LED component into that deployment. This deployment will automatically include the basic command and data handling setup needed to interact with the component. Wiring the `Led` component to the GPIO driver component will be covered in a later section after the component implementation has finished.
+
+> Users must have created the [initial Led component implementation](./component-implementation-1.md) in order to run through this section. Users may continue to define commands, events, telemetry, and ports after this initial integration.
+
+## Creating the `LedBlinker` Deployment
+
+In order to produce an executable to run the software, users need to create a deployment. A deployment is one software executable that contains the main entry point, and an F´ system topology. We will be using a custom deployment that autogenerates an Arduino deployment.
+
+First, add the line into `led-blinker/settings.ini`:
+```
+deployment_cookiecutter: https://github.com/ethancheez/fprime-arduino-deployment-cookiecutter.git
+```
+
+Create a new deployment in the `led-blinker` directory with:
+
+```shell
+#In led-blinker
+fprime-util new --deployment
+```
+
+This will ask for some input, respond with the following answers:
+```shell
+[INFO] Cookiecutter source: https://github.com/ethancheez/fprime-arduino-deployment-cookiecutter.git
+deployment_name [MyDeployment]: LedBlinker
+path_to_fprime [./fprime]:
+```
+> Use the default response for any other questions asked.
+
+In order to check that the deployment was created successfully, the user can generate a build cache and build the deployment. This will generate and build the code for the current host system, not the remote embedded hardware allowing a local test during development. 
+
+```shell
+# In led-blinker
+fprime-util build
+```
+
+## Adding `Led` Component To The Deployment
+
+The component can now be added to the deployment's topology effectively adding this component to the running system. This is done by modifying `instances.fpp` and `topology.fpp` in the `Top` directory.
+
+Add the following to `led-blinker/LedBlinker/Top/instances.fpp`.  Typically, this is added to the "Passive component instances" section of that document.
+
+```
+  instance led: Components.Led base id 0x10000 \
+```
+
+This defines an instance of the `Led` component called `led`.
+
+Next, the topology needs to use the above definition. This is done by adding the following to the list of instances defined in `led-blinker/LedBlinker/Top/topology.fpp`.
+
+```
+  topology LedBlinker {
+    ...
+    instance ...
+    instance led
+    ...
+  }
+```
+
+> No port connections need to be added because thus far the component only defines standard ports and those are connected automatically.
+
+> This includes the large project (e.g. `Components`) in this deployment's build.
+
+## Conclusion
+
+Congratulations! You have now integrated your component and tested that integration.
+
+This tutorial will return to the component implementation before finishing the integration of the component and testing on hardware.
+
+### Next Step: [Continuing Component Implementation](./component-implementation-2.md).
