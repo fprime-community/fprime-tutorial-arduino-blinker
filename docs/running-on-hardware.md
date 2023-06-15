@@ -27,7 +27,7 @@ Next run the F´ GDS without launching the native compilation (`-n`) and with th
 
 ```bash
 # In led-blinker/LedBlinker
-fprime-gds -n --dictionary ./build-artifacts/<build name>/LedBlinker/dict/LedBlinkerAppDictionary.xml --comm-adapter uart --uart-device /dev/ttyACM0 --uart-baud 115200
+fprime-gds -n --dictionary ./build-artifacts/<build name>/LedBlinker/dict/LedBlinkerTopologyAppDictionary.xml --comm-adapter uart --uart-device /dev/ttyACM0 --uart-baud 115200
 ```
 
 >  The green circle should now appear on the top right of F´ GDS.
