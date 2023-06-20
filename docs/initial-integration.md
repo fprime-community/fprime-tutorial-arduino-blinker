@@ -23,8 +23,9 @@ fprime-util new --deployment
 This will ask for some input, respond with the following answers:
 ```shell
 [INFO] Cookiecutter source: https://github.com/ethancheez/fprime-arduino-deployment-cookiecutter.git
-deployment_name [MyDeployment]: LedBlinker
-path_to_fprime [./fprime]:
+deployment_name [fprime-arduino-deployment]: LedBlinker
+[INFO] Found CMake file at 'led-blinker/project.cmake'
+Add component LedBlinker to led-blinker/project.cmake at end of file (yes/no)? yes
 ```
 > Use the default response for any other questions asked.
 
@@ -42,7 +43,7 @@ The component can now be added to the deployment's topology effectively adding t
 Add the following to `led-blinker/LedBlinker/Top/instances.fpp`.  Typically, this is added to the "Passive component instances" section of that document.
 
 ```
-  instance led: Components.Led base id 0x10000 \
+  instance led: Components.Led base id 0x10000
 ```
 
 This defines an instance of the `Led` component called `led`.

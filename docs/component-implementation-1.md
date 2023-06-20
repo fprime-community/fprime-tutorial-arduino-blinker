@@ -89,6 +89,8 @@ Many of the behaviors of the component discussed in the [Component Design](#comp
 Open `Led.hpp` in `led-blinker/Components/Led`, and add the following private member variables to the end of the file.
 
 ```cpp
+  PRIVATE:
+  
     Fw::On state; //! Keeps track if LED is on or off
     U64 transitions; //! The number of on/off transitions that have occurred from FSW boot up
     U32 count; //! Keeps track of how many ticks the LED has been on for

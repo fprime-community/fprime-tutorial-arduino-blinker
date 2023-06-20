@@ -17,6 +17,22 @@ library_locations: ./fprime-arduino
 default_toolchain: teensy41
 ```
 
+## Modifying F´ Configuration Files
+
+If you are building for a system with low memory (< 100KB RAM), this step is recommended.
+
+Copy the default F´ configuration files into your project root.
+```shell
+cp -r fprime/config .
+```
+
+Reference the `config` files in this repository and modify your `config` files accordingly.
+
+Then redirect the configuration path in your `led-blinker/settings.ini` by adding the following line:
+```
+config_directory: ./config
+```
+
 ## Test Deployment
 
 Test the new teensy41 build by running:
@@ -32,6 +48,6 @@ If you wish to test other Arduino build, append the build name after `fprime-uti
 
 ## Conclusion
 
-Congratulations! You are now able to build an F´ deployment for Arduino microcontrollers! The next step is to reduce the amount of memory used so it can support hardware with limited memory.
+Congratulations! You are now able to build an F´ deployment for Arduino microcontrollers! The next step is to create your LED Component.
 
 ### Next Step: [Component Design and Initial Implementation](./component-implementation-1.md).
