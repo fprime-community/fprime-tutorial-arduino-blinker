@@ -21,7 +21,7 @@ namespace Components {
         state(Fw::On::OFF),
         transitions(0),
         count(0),
-        blinking(false)
+        blinking(true)
   {
 
   }
