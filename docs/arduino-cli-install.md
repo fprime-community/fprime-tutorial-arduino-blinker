@@ -53,4 +53,4 @@ arduino-cli core install adafruit:samd
 ```
 
 ## Adding udev rules (Linux Only)
-Add udev rules. Download/save all the `.rules` files located in [`./docs/rules`](./rules/) into `/etc/udev/rules.d/`.
+Add udev rules. Download/save all the `.rules` files located [here](./rules/) into `/etc/udev/rules.d/`.
