@@ -43,11 +43,14 @@ fprime-util build
 ```
 
 If you wish to test other Arduino build, append the build name after `fprime-util generate` and `fprime-util build`. Tested boards are listed below (build name in parenthesis):
+- Teensy 4.0 (teensy40)
 - Teensy 4.1 (teensy41)
 - Adafruit Feather M0 (featherM0)
 
 ## Conclusion
 
 Congratulations! You are now able to build an F´ deployment for Arduino microcontrollers! The next step is to create your LED Component.
+
+> Note: You can no longer build for the native system as this is now an Arduino specific deployment.
 
 ### Next Step: [Component Design and Initial Implementation](./component-implementation-1.md).

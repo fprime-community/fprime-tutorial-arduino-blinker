@@ -104,7 +104,7 @@ Led ::Led(const char* const compName) : LedComponentBase(compName),
     state(Fw::On::OFF),
     transitions(0),
     count(0),
-    blinking(false)
+    blinking(true)
 {}
 ```
 

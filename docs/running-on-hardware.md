@@ -26,11 +26,15 @@ First, upload the binary/hex file to the board after building. Follow [this guid
 Next run the F´ GDS without launching the native compilation (`-n`) and with the dictionary from the build above (`--dictionary ./build-artifacts/<build name>/LedBlinkerTopologyAppDictionary.xml`). Connect it to the USB device by adding the `--comm-adapter`, `--uart-device`, and `--uart-baud` flags
 
 ```bash
-# In led-blinker/LedBlinker
-fprime-gds -n --dictionary ./build-artifacts/<build name>/LedBlinker/dict/LedBlinkerTopologyAppDictionary.xml --comm-adapter uart --uart-device /dev/ttyACM0 --uart-baud 115200
+# In led-blinker
+fprime-gds -n --dictionary ./build-artifacts/<build_name>/LedBlinker/dict/LedBlinkerTopologyAppDictionary.xml --comm-adapter uart --uart-device /dev/ttyACM0 --uart-baud 115200
 ```
 
->  The green circle should now appear on the top right of F´ GDS.
+For MacOS users, you may have to install `pyserial`: `pip install pyserial`
+
+> Change `<build_name>` to your build (i.e. `teensy41`, `featherM0`, etc.)
+> `/dev/ttyACM0` may vary for your system. For MacOS, it will be along the lines of `/dev/tty.usbmodem12345` Change accordingly.
+> The green circle should now appear on the top right of F´ GDS.
 
 ## Testing the Topology
 
@@ -39,6 +43,8 @@ Test the component integration with the following steps:
 1. Verify connection: confirm that there is a green circle and not a red X in the upper right corner.
 2. Send a Command: select the 'Commanding' tab, search for led.BLINKING_ON_OFF and send it with the argument set to ON.
 3. Verify Event: select the 'Events' tab and verify that the SetBlinkingState event reports the blinking state was set to ON.
+4. Repeat steps 2 and 3 to turn the LED OFF.
+5. Verify Telemetry: select the 'Channels' tab and verify that the LedBlinker telemetries appear.
 
 
 # Conclusion
