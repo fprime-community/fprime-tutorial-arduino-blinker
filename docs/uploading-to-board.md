@@ -16,10 +16,21 @@ Double press on the reset button on the Feather to set it to programming mode. T
 
 # MacOS
 ~/Library/Arduino15/packages/adafruit/tools/bossac/1.8.0-48-gb176eee/bossac -i -d --port=tty.usbmodem12345 -U -i --offset=0x2000 -w -v ./build-artifacts/featherM0/LedBlinker/bin/LedBlinker.bin -R
-
 ```
 
 Note:
   - If you have more than one device connected, or if you are using a different OS, `ttyACM0` may differ for your system.
       - On MacOS, it may look like `tty.usbmodem12345`
       - To view your list of devices, run: `ls /dev/tty*`
+
+## ESP32 Dev Module
+
+```sh
+# Linux
+python3 "~/.arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool.py" --chip esp32 --port "/dev/ttyUSB0" --baud 921600  --before default_reset --after hard_reset write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x1000 "build-fprime-automatic-esp32/arduino-cli-sketch/tmp8lcl76bw.ino.bootloader.bin" 0x8000 "build-fprime-automatic-esp32/arduino-cli-sketch/tmp8lcl76bw.ino.partitions.bin" 0xe000 "~/.arduino15/packages/esp32/hardware/esp32/2.0.9/tools/partitions/boot_app0.bin" 0x10000 "build-artifacts/esp32/LedBlinker/bin/LedBlinker.bin"
+
+# MacOS
+python3 "~/Library/Arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool.py" --chip esp32 --port "/dev/ttyUSB0" --baud 921600  --before default_reset --after hard_reset write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x1000 "build-fprime-automatic-esp32/arduino-cli-sketch/tmp8lcl76bw.ino.bootloader.bin" 0x8000 "build-fprime-automatic-esp32/arduino-cli-sketch/tmp8lcl76bw.ino.partitions.bin" 0xe000 "~/Library/Arduino15/packages/esp32/hardware/esp32/2.0.9/tools/partitions/boot_app0.bin" 0x10000 "build-artifacts/esp32/LedBlinker/bin/LedBlinker.bin"
+```
+
+Note: Change `tmp8lcl76bw` to the actual temporary file name located in `build-fprime-automatic-esp32/arduino-cli-sketch`

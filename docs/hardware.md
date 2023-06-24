@@ -4,7 +4,7 @@ Users will need at least one hardware element to follow the LED Blinker tutorial
 
 ## Arduino Microcontroller Requirements
 
-The microcontroller must have sufficient FLASH memory and SRAM to run F´. The current requirements are at least 140 KB of FLASH memory and 24 KB of SRAM.
+The microcontroller must have sufficient FLASH memory and SRAM to run F´. The current requirements are at least 140 KB of FLASH memory and 30 KB of SRAM.
 
 ## LED Requirements
 

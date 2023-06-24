@@ -43,6 +43,7 @@ board_manager:
   additional_urls:
     - https://www.pjrc.com/teensy/package_teensy_index.json
     - https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
+    - https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
 ```
 
 Download the new board package:
@@ -50,7 +51,10 @@ Download the new board package:
 arduino-cli core update-index
 arduino-cli core install teensy:avr
 arduino-cli core install adafruit:samd
+arduino-cli core install esp32:esp32
 ```
+
+> You may choose to download a specific board package instead of all. These are the boards that have been tested.
 
 ## Adding udev rules (Linux Only)
 Add udev rules. Download/save all the `.rules` files located [here](./rules/) into `/etc/udev/rules.d/`.

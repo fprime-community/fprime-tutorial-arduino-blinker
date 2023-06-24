@@ -33,7 +33,7 @@ fprime-gds -n --dictionary ./build-artifacts/<build_name>/LedBlinker/dict/LedBli
 For MacOS users, you may have to install `pyserial`: `pip install pyserial`
 
 > Change `<build_name>` to your build (i.e. `teensy41`, `featherM0`, etc.)
-> `/dev/ttyACM0` may vary for your system. For MacOS, it will be along the lines of `/dev/tty.usbmodem12345` Change accordingly.
+> `/dev/ttyACM0` may vary for your system/device. It may also be `/dev/ttyUSB0`. For MacOS, it will be along the lines of `/dev/tty.usbmodem12345`. Change accordingly.
 > The green circle should now appear on the top right of F´ GDS.
 
 ## Testing the Topology

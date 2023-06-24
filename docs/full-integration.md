@@ -39,7 +39,7 @@ To do this, add the following lines to `led-blinker/LedBLinker/Top/topology.fpp`
 
 ## Configuring The GPIO Driver
 
-So far the GPIO driver has been instantiated and wired, but has not been told what GPIO pin to control. For this tutorial, GPIO pin 13 will be used. To configure this, the `open` function needs to be called in the topology's C++ implementation and passed the pin's number and direction.
+So far the GPIO driver has been instantiated and wired, but has not been told what GPIO pin to control. For this tutorial, the built-in LED will be used. To configure this, the `open` function needs to be called in the topology's C++ implementation and passed the pin's number and direction.
 
 This is done by adding the following line to the `configureTopology` function defined in `led-blinker/LedBLinker/Top/LedBLinkerTopology.cpp`.
 
@@ -51,7 +51,7 @@ void configureTopology() {
 }
 ```
 
-This code tells the GPIO driver to open pin LED_BUILTIN (usually pin 13) as an output pin.
+This code tells the GPIO driver to open pin LED_BUILTIN (usually pin 13) as an output pin. If your device does not have a built in LED, select a GPIO pin of your choice.
 
 > In `led-blinker` build the deployment and resolve any errors before continuing.
 
