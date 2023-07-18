@@ -2,3 +2,7 @@
 	path = fprime
 	url = https://github.com/nasa/fprime.git
 	branch = devel
+[submodule "fprime-arduino"]
+	path = fprime-arduino
+	url = https://github.com/SterlingPeet/fprime-arduino.git
+	branch = mbed-work
