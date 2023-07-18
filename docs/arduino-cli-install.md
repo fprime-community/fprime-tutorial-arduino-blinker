@@ -18,12 +18,16 @@ pip install .
 ## Add `~/.local/bin` to PATH
 ```shell
 sudo nano ~/.bashrc
-source ~/.bashrc  # or restart your terminal
 ```
 
 Add the following line at the end of the file:
 ```
 export PATH=~/.local/bin:$PATH
+```
+
+Save, exit, and run the following:
+```shell
+source ~/.bashrc  # or restart your terminal
 ```
 
 ## Setup arduino-cli for Teensy and Adafruit boards
