@@ -16,8 +16,9 @@ Add `fprime-arduino` as a library and change the default build toolchain to `tee
 library_locations: ./fprime-arduino
 default_toolchain: teensy41
 ```
+> If you would like to use a different board as your default toolchain, you may change `teensy41` to your desired board.
 
-## Modifying F´ Configuration Files
+## Modifying F´ Configuration Files (Optional)
 
 If you are building for a system with low memory (< 100KB RAM), this step is recommended.
 
@@ -26,7 +27,7 @@ Copy the default F´ configuration files into your project root.
 cp -r fprime/config .
 ```
 
-Reference the `config` files in this repository and modify your `config` files accordingly.
+Reference the [`config`](../config/) files in this repository and modify your `config` files accordingly. Or, you may clone this repository and copy the entire `config` directory into your project.
 
 Then redirect the configuration path in your `led-blinker/settings.ini` by adding the following line:
 ```
@@ -42,10 +43,15 @@ fprime-util generate
 fprime-util build
 ```
 
-If you wish to test other Arduino build, append the build name after `fprime-util generate` and `fprime-util build`. Tested boards are listed below (build name in parenthesis):
+If you wish to test other Arduino builds, append the build name after `fprime-util generate` and `fprime-util build`. Tested boards are listed below (build name in parenthesis):
+- Teensy 3.2 (teensy32)
 - Teensy 4.0 (teensy40)
 - Teensy 4.1 (teensy41)
 - Adafruit Feather M0 (featherM0)
+- Adafruit Feather RP2040 (featherrp2040rfm)
+- SparkFun Thing Plus RP2040 (thingplusrp2040)
+- ESP32 Dev Module (esp32)
+- Raspberry Pi Pico W (rpipicow)
 
 ## Conclusion
 
