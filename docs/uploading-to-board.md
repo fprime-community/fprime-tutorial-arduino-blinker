@@ -39,6 +39,15 @@ Note: Change `tmp8lcl76bw` to the actual temporary file name located in `build-f
 
 ## Raspberry Pi Pico W (RP2040)
 
+#### Method 1
+
+Hold down the BOOTSEL button on your RPi Pico W as you plug in the micro-USB cable. A media device should mount to your system as `RPI-RP2`. Copy and paste `build-artifacts/rpipicow/LedBlinker/bin/LedBlinker.uf2` into the `RPI-RP2` media. The RPi Pico W should automatically unmout and run your binary.
+
+
+#### Method 2
+
+Follow this if your RPi Pico W does not mount as a media device.
+
 ```sh
 chmod 0777 /dev/ttyACM0
 
