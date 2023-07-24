@@ -7,7 +7,7 @@ First, upload the binary/hex file to the board after building. Follow [this guid
 Next run the F´ GDS without launching the native compilation (`-n`) and with the dictionary from the build above (`--dictionary ./build-artifacts/<build name>/LedBlinkerTopologyAppDictionary.xml`). Connect it to the USB device by adding the `--comm-adapter`, `--uart-device`, and `--uart-baud` flags
 
 ```bash
-# In led-blinker
+# In the project root
 fprime-gds -n --dictionary ./build-artifacts/teensy41/LedBlinker/dict/LedBlinkerTopologyAppDictionary.xml --comm-adapter uart --uart-device /dev/ttyACM0 --uart-baud 115200
 ```
 

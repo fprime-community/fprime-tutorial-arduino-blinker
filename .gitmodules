@@ -4,5 +4,4 @@
 	branch = devel
 [submodule "fprime-arduino"]
 	path = fprime-arduino
-	url = https://github.com/SterlingPeet/fprime-arduino.git
-	branch = mbed-work
+	url = https://github.com/ethancheez/fprime-arduino.git
