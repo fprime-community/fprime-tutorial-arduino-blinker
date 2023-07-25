@@ -4,39 +4,21 @@
 // \brief  cpp file for Led component implementation class
 // ======================================================================
 
-
 #include <Components/Led/Led.hpp>
 #include <FpConfig.hpp>
 
 namespace Components {
 
-  // ----------------------------------------------------------------------
-  // Construction, initialization, and destruction
-  // ----------------------------------------------------------------------
+// ----------------------------------------------------------------------
+// Construction, initialization, and destruction
+// ----------------------------------------------------------------------
 
-  Led ::
-    Led(
-        const char *const compName
-    ) : LedComponentBase(compName),
-        state(Fw::On::OFF),
-        transitions(0),
-        count(0),
-        blinking(true)
-  {
+Led ::Led(const char* const compName)
+    : LedComponentBase(compName), state(Fw::On::OFF), transitions(0), count(0), blinking(true) {}
 
-  }
+Led ::~Led() {}
 
-  Led ::
-    ~Led()
-  {
-
-  }
-
-  void Led ::
-    parameterUpdated(
-        FwPrmIdType id
-    )
-  {
+void Led ::parameterUpdated(FwPrmIdType id) {
     // Read back the parameter value
     Fw::ParamValid isValid;
     U32 interval = this->paramGet_BLINK_INTERVAL(isValid);
@@ -48,18 +30,13 @@ namespace Components {
         // Emit the blink interval set event
         this->log_ACTIVITY_HI_BlinkIntervalSet(interval);
     }
-  }
+}
 
-  // ----------------------------------------------------------------------
-  // Handler implementations for user-defined typed input ports
-  // ----------------------------------------------------------------------
+// ----------------------------------------------------------------------
+// Handler implementations for user-defined typed input ports
+// ----------------------------------------------------------------------
 
-  void Led ::
-    run_handler(
-        const NATIVE_INT_TYPE portNum,
-        NATIVE_UINT_TYPE context
-    )
-  {
+void Led ::run_handler(const NATIVE_INT_TYPE portNum, NATIVE_UINT_TYPE context) {
     // Read back the parameter value
     Fw::ParamValid isValid;
     U32 interval = this->paramGet_BLINK_INTERVAL(isValid);
@@ -69,74 +46,59 @@ namespace Components {
 
     // Only perform actions when set to blinking
     bool is_blinking = this->blinking;
-    if (is_blinking)
-    {
-      Fw::On new_state = this->state;
-      // Check for transitions
-      if ((0 == this->count) && (this->state == Fw::On::OFF))
-      {
-        new_state = Fw::On::ON;
-      }
-      else if (((interval / 2) == this->count) && (this->state == Fw::On::ON))
-      {
-        new_state = Fw::On::OFF;
-      }
-
-      // A transition has occurred
-      if (this->state != new_state)
-      {
-        this->transitions = this->transitions + 1;
-        this->tlmWrite_LedTransitions(this->transitions);
-
-        // Port may not be connected, so check before sending output
-        if (this->isConnected_gpioSet_OutputPort(0))
-        {
-          this->gpioSet_out(0, (Fw::On::ON == new_state) ? Fw::Logic::HIGH : Fw::Logic::LOW);
+    if (is_blinking) {
+        Fw::On new_state = this->state;
+        // Check for transitions
+        if ((0 == this->count) && (this->state == Fw::On::OFF)) {
+            new_state = Fw::On::ON;
+        } else if (((interval / 2) == this->count) && (this->state == Fw::On::ON)) {
+            new_state = Fw::On::OFF;
         }
 
-        this->log_ACTIVITY_LO_LedState(new_state);
-        this->state = new_state;
-      }
+        // A transition has occurred
+        if (this->state != new_state) {
+            this->transitions = this->transitions + 1;
+            this->tlmWrite_LedTransitions(this->transitions);
 
-      this->count = ((this->count + 1) >= interval) ? 0 : (this->count + 1);
+            // Port may not be connected, so check before sending output
+            if (this->isConnected_gpioSet_OutputPort(0)) {
+                this->gpioSet_out(0, (Fw::On::ON == new_state) ? Fw::Logic::HIGH : Fw::Logic::LOW);
+            }
+
+            this->log_ACTIVITY_LO_LedState(new_state);
+            this->state = new_state;
+        }
+
+        this->count = ((this->count + 1) >= interval) ? 0 : (this->count + 1);
     }
-  }
+}
 
-  // ----------------------------------------------------------------------
-  // Command handler implementations
-  // ----------------------------------------------------------------------
+// ----------------------------------------------------------------------
+// Command handler implementations
+// ----------------------------------------------------------------------
 
-  void Led ::
-    BLINKING_ON_OFF_cmdHandler(
-        const FwOpcodeType opCode,
-        const U32 cmdSeq,
-        Fw::On on_off
-    )
-  {
+void Led ::BLINKING_ON_OFF_cmdHandler(const FwOpcodeType opCode, const U32 cmdSeq, Fw::On on_off) {
     // Create a variable to represent the command response
     auto cmdResp = Fw::CmdResponse::OK;
 
     // Verify if on_off is a valid argument.
     // Note: isValid is an autogenerate helper function for enums defined in fpp.
-    if(!on_off.isValid())
-    {
+    if (!on_off.isValid()) {
         this->log_WARNING_LO_InvalidBlinkArgument(on_off);
 
         // Update command response with a validation error
         cmdResp = Fw::CmdResponse::VALIDATION_ERROR;
-    }
-    else
-    {
-      this->count = 0; // Reset count on any successful command
-      this->blinking = Fw::On::ON == on_off; // Update blinking state
+    } else {
+        this->count = 0;                        // Reset count on any successful command
+        this->blinking = Fw::On::ON == on_off;  // Update blinking state
 
-      this->log_ACTIVITY_HI_SetBlinkingState(on_off);
+        this->log_ACTIVITY_HI_SetBlinkingState(on_off);
 
-      this->tlmWrite_BlinkingState(on_off);
+        this->tlmWrite_BlinkingState(on_off);
     }
 
     // Provide command response
-    this->cmdResponse_out(opCode,cmdSeq,cmdResp);
-  }
+    this->cmdResponse_out(opCode, cmdSeq, cmdResp);
+}
 
-} // end namespace Components
+}  // end namespace Components

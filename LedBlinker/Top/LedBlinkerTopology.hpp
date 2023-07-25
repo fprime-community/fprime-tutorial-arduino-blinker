@@ -5,8 +5,8 @@
 // ======================================================================
 #ifndef LEDBLINKER_LEDBLINKERTOPOLOGY_HPP
 #define LEDBLINKER_LEDBLINKERTOPOLOGY_HPP
-// Included for access to LedBlinker::TopologyState and LedBlinker::ConfigObjects::pingEntries. These definitions are required by the
-// autocoder, but are also used in this hand-coded topology.
+// Included for access to LedBlinker::TopologyState and LedBlinker::ConfigObjects::pingEntries. These definitions are
+// required by the autocoder, but are also used in this hand-coded topology.
 #include <LedBlinker/Top/LedBlinkerTopologyDefs.hpp>
 
 // Remove unnecessary LedBlinker:: qualifications
@@ -59,5 +59,5 @@ void setupTopology(const TopologyState& state);
  */
 void teardownTopology(const TopologyState& state);
 
-} // namespace LedBlinker
+}  // namespace LedBlinker
 #endif

@@ -4,14 +4,14 @@
 //
 // ======================================================================
 // Used to access topology functions
-#include <LedBlinker/Top/LedBlinkerTopologyAc.hpp>
 #include <LedBlinker/Top/LedBlinkerTopology.hpp>
+#include <LedBlinker/Top/LedBlinkerTopologyAc.hpp>
 // Used for Task Runner
 #include <Os/Baremetal/TaskRunner/TaskRunner.hpp>
 
 // Used for logging
-#include <Os/Log.hpp>
 #include <Arduino/Os/StreamLog.hpp>
+#include <Os/Log.hpp>
 
 // Instantiate a system logger that will handle Fw::Logger::logMsg calls
 Os::Log logger;
@@ -23,10 +23,9 @@ Os::TaskRunner taskrunner;
  * \brief setup the program
  *
  * This is an extraction of the Arduino setup() function.
- * 
+ *
  */
-void setup()
-{
+void setup() {
     // Setup Serial
     Serial.begin(115200);
     Os::setArduinoStreamLogHandler(&Serial);
@@ -46,10 +45,9 @@ void setup()
  * \brief run the program
  *
  * This is an extraction of the Arduino loop() function.
- * 
+ *
  */
-void loop()
-{
+void loop() {
 #ifdef USE_BASIC_TIMER
     rateDriver.cycle();
 #endif

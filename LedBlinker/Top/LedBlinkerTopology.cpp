@@ -4,8 +4,8 @@
 //
 // ======================================================================
 // Provides access to autocoded functions
-#include <LedBlinker/Top/LedBlinkerTopologyAc.hpp>
 #include <LedBlinker/Top/LedBlinkerPacketsAc.hpp>
+#include <LedBlinker/Top/LedBlinkerTopologyAc.hpp>
 #include <config/FppConstantsAc.hpp>
 
 // Necessary project-specified types
@@ -69,7 +69,7 @@ void setupTopology(const TopologyState& state) {
     // loadParameters();
     // Autocoded task kick-off (active components). Function provided by autocoder.
     startTasks(state);
-    
+
     rateDriver.configure(1);
     commDriver.configure(&Serial);
     rateDriver.start();
