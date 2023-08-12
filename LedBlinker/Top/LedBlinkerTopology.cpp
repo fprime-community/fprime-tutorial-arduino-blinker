@@ -48,8 +48,9 @@ void configureTopology() {
     // Framer and Deframer components need to be passed a protocol handler
     framer.setup(framing);
     deframer.setup(deframing);
-
+#ifndef NO_ONBOARD_LED
     gpioDriver.open(Arduino::DEF_LED_BUILTIN, Arduino::GpioDriver::GpioDirection::OUT);
+#endif
 }
 
 // Public functions for use in main program are namespaced with deployment name LedBlinker
