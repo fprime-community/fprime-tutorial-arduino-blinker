@@ -1,33 +1,19 @@
 # Arduino CLI Installation Guide
 
+This guide will walk through the installation of the `arduino-cli` and `arduino-cli-cmake-wraper` components used to bridge F Prime and the Arduino buuld system. This assumes a virtual environment has been setup for your project.
+
+> Activate the project virtual environment now.
+
 ## Install arduino-cli
 ```shell
-mkdir -p ~/.local/bin
-curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=~/.local/bin sh
+curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=$VIRTUAL_ENV/bin sh
 ```
+
+This command downloads `arduino-cli` and installs the binary into the existing (and activated) virtual environment.
 
 ## Install arduino-cli-wrapper
 ```shell
-cd ~/.local/bin
-git clone https://github.com/SterlingPeet/arduino-cli-cmake-wrapper.git
-cd arduino-cli-cmake-wrapper
-git checkout update/refactor
-pip install .
-```
-
-## Add `~/.local/bin` to PATH
-```shell
-sudo nano ~/.bashrc
-```
-
-Add the following line at the end of the file:
-```
-export PATH=~/.local/bin:$PATH
-```
-
-Save, exit, and run the following:
-```shell
-source ~/.bashrc  # or restart your terminal
+pip install arduino-cli-cmake-wrapper
 ```
 
 ## Setup arduino-cli for select Arduino boards
