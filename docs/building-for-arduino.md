@@ -44,13 +44,13 @@ fprime-util build
 ```
 
 If you wish to test other Arduino builds, append the build name after `fprime-util generate` and `fprime-util build`. Tested boards are listed below (build name in parenthesis):
-- Teensy 3.2 (teensy32)
 - Teensy 4.0 (teensy40)
 - Teensy 4.1 (teensy41)
 - Adafruit Feather M0 (featherM0)
 - Adafruit Feather RP2040 (featherrp2040rfm)
 - SparkFun Thing Plus RP2040 (thingplusrp2040)
 - ESP32 Dev Module (esp32)
+- Raspberry Pi Pico (rpipico)
 - Raspberry Pi Pico W (rpipicow)
 
 ## Conclusion
