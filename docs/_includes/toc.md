@@ -3,7 +3,7 @@
   <ul>
     <!-- empty list for consistent spacing between items -->
   </ul>
-<h4><a href="/fprime-tutorial-arduino-blinker/">F' LED Blinker Tutorial for Arduinos</a></h4>
+<h4><a href="/fprime-tutorial-arduino-blinker/">Arduino LedBlinker Tutorial</a></h4>
   <ol>
     <li><a href="/fprime-tutorial-arduino-blinker/docs/project-setup.html">Project Setup</a></li>
     <li><a href="/fprime-tutorial-arduino-blinker/docs/building-for-arduino.html">Building for Arduino</a></li>
