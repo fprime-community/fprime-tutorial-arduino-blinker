@@ -8,8 +8,8 @@ This version uses a scaled down deployment of F´ to account for the limited res
 
 In order to run through this tutorial, users should first do the following:
 
-1. Follow the [Hello World Tutorial](https://nasa.github.io/fprime/Tutorials/HelloWorld/Tutorial.html)
-2. Ensure F´ tools have been [bootstrapped](https://nasa.github.io/fprime/Tutorials/HelloWorld/NewProject.html#bootstrapping-f)
+1. Follow the [Hello World Tutorial](https://fprime-community.github.io/fprime-tutorial-hello-world/)
+2. Ensure F´ tools have been [bootstrapped](https://fprime-community.github.io/fprime-tutorial-hello-world/docs/NewProject.html#bootstrapping-f)
 3. Acquire and set up the appropriate [hardware](docs/hardware.md) for this tutorial
 4. Follow the [arduino-cli installation guide](docs/arduino-cli-install.md)
 
