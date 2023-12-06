@@ -52,33 +52,33 @@ You will be prompted for information regarding your component. Fill out the prom
 
 ```bash
 [INFO] Cookiecutter source: using builtin
-component_name [MyComponent]: Led
-component_short_description [Example Component for F Prime FSW framework.]: Component to blink an LED driven by a rate group
-component_namespace [Led]: Components
-Select component_kind:
-1 - active
-2 - passive
-3 - queued
-Choose from 1, 2, 3 [1]: 2
-Select enable_commands:
-1 - yes
-2 - no
-Choose from 1, 2 [1]: 1  
-Select enable_telemetry:
-1 - yes
-2 - no
-Choose from 1, 2 [1]: 1
-Select enable_events:
-1 - yes
-2 - no
-Choose from 1, 2 [1]: 1
-Select enable_parameters:
-1 - yes
-2 - no
-Choose from 1, 2 [1]: 1
+  [1/8] Component name (MyComponent): Led
+  [2/8] Component short description (Component for F Prime FSW framework.): Component to blink an LED driven by a rate group
+  [3/8] Component namespace (Components): Components
+  [4/8] Select component kind
+    1 - active
+    2 - passive
+    3 - queued
+    Choose from [1/2/3] (1): 2
+  [5/8] Enable Commands?
+    1 - yes
+    2 - no
+    Choose from [1/2] (1): 1
+  [6/8] Enable Telemetry?
+    1 - yes
+    2 - no
+    Choose from [1/2] (1): 1
+  [7/8] Enable Events?
+    1 - yes
+    2 - no
+    Choose from [1/2] (1): 1
+  [8/8] Enable Parameters?
+    1 - yes
+    2 - no
+    Choose from [1/2] (1): 1
 [INFO] Found CMake file at 'led-blinker/project.cmake'
-Add component Led to led-blinker/project.cmake at end of file (yes/no)? yes
-Generate implementation files (yes/no)? yes
+Add Components/Led to led-blinker/project.cmake at end of file? (yes/no) [yes]: yes
+Generate implementation files? (yes/no) [yes]: yes
 ```
 Your new component is located in the directory `led-blinker/Components/Led`.
 
