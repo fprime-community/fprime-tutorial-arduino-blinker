@@ -7,6 +7,9 @@
 #
 #####
 
+# Deployment is only compatible with the Arduino platform
+restrict_platforms(ArduinoFw)
+
 ###
 # Topology and Components
 ###
@@ -21,6 +24,4 @@ set(MOD_DEPS ${FPRIME_CURRENT_MODULE}/Top)
 
 register_fprime_deployment()
 
-if (CMAKE_SYSTEM_NAME STREQUAL ArduinoFw)
-    finalize_arduino_executable("${FPRIME_CURRENT_MODULE}")
-endif()
+finalize_arduino_executable("${FPRIME_CURRENT_MODULE}")
