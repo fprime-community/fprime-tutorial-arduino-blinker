@@ -1,6 +1,6 @@
 # Arduino CLI Installation Guide
 
-This guide will walk through the installation of the `arduino-cli` and `arduino-cli-cmake-wraper` components used to bridge F Prime and the Arduino buuld system. This assumes a virtual environment has been setup for your project.
+This guide will walk through the installation of the `arduino-cli` and `arduino-cli-cmake-wraper` components used to bridge F Prime and the Arduino build system. This assumes a virtual environment has been setup for your project.
 
 > Activate the project virtual environment now.
 
@@ -52,4 +52,4 @@ arduino-cli core install rp2040:rp2040
 ```
 
 ## Adding udev rules (Linux Only)
-Add udev rules. Download/save the `.rules` files located [here](./rules/) for your selected board(s) into `/etc/udev/rules.d/`.
+Add udev rules. Download/save the `.rules` files located [here](https://github.com/fprime-community/fprime-tutorial-arduino-blinker/tree/main/docs/rules) for your selected board(s) into `/etc/udev/rules.d/`.
