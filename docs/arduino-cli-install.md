@@ -20,11 +20,12 @@ pip install arduino-cli-cmake-wrapper
 
 The following list of boards were tested. You are free to add your own board manager URL to your configuration if you are using a board that is not listed here:
   - PJRC Teensy (Teensy 3.2, Teensy 4.0, Teensy 4.1)
-  - Adafruit Feather M0
-  - ESP32 Dev Module
+  - Raspberry Pi Pico (RP2040)
   - Raspberry Pi Pico W (RP2040)
+  - Adafruit Feather M0
   - Adafruit Feather RP2040
   - SparkFun Thing Plus RP2040
+  - ESP32 Dev Module (currently broken)
   - ATmega128 (with external memory, not the stock 2K memory)
 
 Initialize the arduino-cli configuration file.
@@ -49,6 +50,17 @@ arduino-cli core install adafruit:samd
 arduino-cli core install esp32:esp32
 arduino-cli core install MegaCore:avr
 arduino-cli core install rp2040:rp2040
+```
+
+## Library Dependencies
+Required Dependencies:
+```shell
+arduino-cli lib install Time
+```
+
+If you will be using the `TcpClient` component, install:
+```shell
+arduino-cli lib install WiFi
 ```
 
 ## Adding udev rules (Linux Only)
