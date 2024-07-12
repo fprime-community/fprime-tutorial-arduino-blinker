@@ -7,7 +7,7 @@ fprime-bootstrap project
 Project name (MyProject): led-blinker
 ```
 
-> Complete instructions on setting-up a new project are available in the [hello world tutorial](https://nasa.github.io/fprime/Tutorials/HelloWorld/NewProject.html).
+> Complete instructions on setting-up a new project are available in the [hello world tutorial](https://fprime-community.github.io/fprime-tutorial-hello-world/docs/NewProject.html).
 
 > Remember to source the virtual environment after creating the project.
 
