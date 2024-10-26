@@ -8,7 +8,7 @@ Next run the F´ GDS without launching the native compilation (`-n`) and with th
 
 ```bash
 # In the project root
-fprime-gds -n --dictionary ./build-artifacts/teensy41/LedBlinker/dict/LedBlinkerTopologyAppDictionary.xml --comm-adapter uart --uart-device /dev/ttyACM0 --uart-baud 115200
+fprime-gds -n --dictionary ./build-artifacts/teensy41/LedBlinker/dict/LedBlinkerTopologyAppDictionary.xml --communication-selection uart --uart-device /dev/ttyACM0 --uart-baud 115200
 ```
 
 For MacOS users, you may have to install `pyserial`: `pip install pyserial`

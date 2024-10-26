@@ -6,18 +6,10 @@
 // Used to access topology functions
 #include <LedBlinker/Top/LedBlinkerTopology.hpp>
 #include <LedBlinker/Top/LedBlinkerTopologyAc.hpp>
-// Used for Task Runner
-#include <Os/Baremetal/TaskRunner/TaskRunner.hpp>
+#include <Os/Console.hpp>
+#include <Arduino/Os/Task.hpp>
 
-// Used for logging
-#include <Arduino/Os/StreamLog.hpp>
-#include <Os/Log.hpp>
-
-// Instantiate a system logger that will handle Fw::Logger::logMsg calls
-Os::Log logger;
-
-// Task Runner
-Os::TaskRunner taskrunner;
+Os::Arduino::Task::TaskRunner taskrunner;
 
 /**
  * \brief setup the program
@@ -26,11 +18,12 @@ Os::TaskRunner taskrunner;
  *
  */
 void setup() {
+    // Initialize OSAL
+    Os::init();
+    
     // Setup Serial
     Serial.begin(115200);
-    Os::setArduinoStreamLogHandler(&Serial);
-    delay(1000);
-    Fw::Logger::logMsg("Program Started\n");
+    Os::Task::delay(Fw::TimeInterval(1, 0));
 
     // Object for communicating state to the reference topology
     LedBlinker::TopologyState inputs;
@@ -39,6 +32,8 @@ void setup() {
 
     // Setup topology
     LedBlinker::setupTopology(inputs);
+
+    Fw::Logger::log("Program Started\n");
 }
 
 /**
@@ -48,8 +43,6 @@ void setup() {
  *
  */
 void loop() {
-#ifdef USE_BASIC_TIMER
-    rateDriver.cycle();
-#endif
+    // rateDriver.cycle();
     taskrunner.run();
 }
