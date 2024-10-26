@@ -251,7 +251,7 @@ typedef FwIndexType FwQueueSizeType;
 #if FW_OBJECT_REGISTRATION
 // For the simple object registry provided with the framework, this specifies how many objects the registry will store.
 #ifndef FW_OBJ_SIMPLE_REG_ENTRIES
-#define FW_OBJ_SIMPLE_REG_ENTRIES 500  //!< Number of objects stored in simple object registry
+#define FW_OBJ_SIMPLE_REG_ENTRIES 128  //!< Number of objects stored in simple object registry
 #endif
 // When dumping the contents of the registry, this specifies the size of the buffer used to store object names. Should
 // be >= FW_OBJ_NAME_BUFFER_SIZE.
