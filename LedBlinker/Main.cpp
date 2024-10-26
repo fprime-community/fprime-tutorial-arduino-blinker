@@ -43,6 +43,8 @@ void setup() {
  *
  */
 void loop() {
-    // rateDriver.cycle();
+#ifdef USE_BASIC_TIMER
+    rateDriver.cycle();
+#endif
     taskrunner.run();
 }
