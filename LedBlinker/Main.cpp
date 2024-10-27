@@ -1,15 +1,18 @@
 // ======================================================================
 // \title  Main.cpp
-// \brief main program for the F' application. Intended for CLI-based systems (Linux, macOS)
+// \brief main program for the F' application. Intended for Arduino-based systems
 //
 // ======================================================================
 // Used to access topology functions
 #include <LedBlinker/Top/LedBlinkerTopology.hpp>
 #include <LedBlinker/Top/LedBlinkerTopologyAc.hpp>
-#include <Os/Console.hpp>
-#include <Arduino/Os/Task.hpp>
 
-Os::Arduino::Task::TaskRunner taskrunner;
+// Used for TaskRunner
+#include <fprime-baremetal/Os/TaskRunner/TaskRunner.hpp>
+
+// Used for logging
+#include <Os/Console.hpp>
+#include <Arduino/Os/Console.hpp>
 
 /**
  * \brief setup the program
@@ -21,9 +24,9 @@ void setup() {
     // Initialize OSAL
     Os::init();
     
-    // Setup Serial
+    // Setup Serial and Logging
     Serial.begin(115200);
-    Os::Task::delay(Fw::TimeInterval(1, 0));
+    static_cast<Os::Arduino::Console::ArduinoConsoleHandle*>(Os::Console::getSingleton().getHandle())->setOutputStream(&Serial);
 
     // Object for communicating state to the reference topology
     LedBlinker::TopologyState inputs;
@@ -46,5 +49,5 @@ void loop() {
 #ifdef USE_BASIC_TIMER
     rateDriver.cycle();
 #endif
-    taskrunner.run();
+    Os::Baremetal::TaskRunner::getSingleton().run();
 }

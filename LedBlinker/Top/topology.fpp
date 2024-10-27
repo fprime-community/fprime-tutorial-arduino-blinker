@@ -69,7 +69,7 @@ module LedBlinker {
     }
 
     connections FaultProtection {
-      eventLogger.FatalAnnounce -> fatalHandler.FatalReceive
+      # eventLogger.FatalAnnounce -> fatalHandler.FatalReceive
     }
 
     connections RateGroups {
