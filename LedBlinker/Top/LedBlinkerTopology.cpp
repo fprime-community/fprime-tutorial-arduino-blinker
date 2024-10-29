@@ -31,6 +31,13 @@ Svc::RateGroupDriver::DividerSet rateGroupDivisors{{{100, 0}, {200, 0}, {1000, 0
 // reference topology sets each token to zero as these contexts are unused in this project.
 NATIVE_INT_TYPE rateGroup1Context[FppConstant_PassiveRateGroupOutputPorts::PassiveRateGroupOutputPorts] = {};
 
+// A number of constants are needed for construction of the topology. These are specified here.
+enum TopologyConstants {
+    COM_BUFFER_SIZE   = 140,
+    COM_BUFFER_COUNT  = 3,
+    BUFFER_MANAGER_ID = 200
+};
+
 /**
  * \brief configure/setup components in project-specific way
  *
@@ -45,9 +52,18 @@ void configureTopology() {
     // Rate groups require context arrays.
     rateGroup1.configure(rateGroup1Context, FW_NUM_ARRAY_ELEMENTS(rateGroup1Context));
 
+    // Set up BufferManager
+    Svc::BufferManager::BufferBins buffMgrBins;
+    memset(&buffMgrBins, 0, sizeof(buffMgrBins));
+    buffMgrBins.bins[0].bufferSize = COM_BUFFER_SIZE;
+    buffMgrBins.bins[0].numBuffers = COM_BUFFER_COUNT;
+    bufferManager.setup(BUFFER_MANAGER_ID, 0, mallocator, buffMgrBins);
+
     // Framer and Deframer components need to be passed a protocol handler
     framer.setup(framing);
     deframer.setup(deframing);
+
+    // Configure built-in LED GPIO if available
 #ifndef NO_ONBOARD_LED
     gpioDriver.open(Arduino::DEF_LED_BUILTIN, Arduino::GpioDriver::GpioDirection::OUT);
 #endif
