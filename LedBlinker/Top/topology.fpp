@@ -24,7 +24,6 @@ module LedBlinker {
     instance commDriver
     instance deframer
     instance eventLogger
-    instance fatalAdapter
     instance fatalHandler
     instance framer
     instance gpioDriver
@@ -69,7 +68,7 @@ module LedBlinker {
     }
 
     connections FaultProtection {
-      # eventLogger.FatalAnnounce -> fatalHandler.FatalReceive
+      eventLogger.FatalAnnounce -> fatalHandler.FatalReceive
     }
 
     connections RateGroups {

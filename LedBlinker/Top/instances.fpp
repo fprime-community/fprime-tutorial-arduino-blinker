@@ -42,11 +42,9 @@ module LedBlinker {
 
   instance framer: Svc.Framer base id 0x4100
 
-  instance fatalAdapter: Svc.AssertFatalAdapter base id 0x4200
+  instance fatalHandler: Baremetal.FatalHandler base id 0x4300
 
-  instance fatalHandler: Svc.FatalHandler base id 0x4300
-
-  instance timeHandler: Arduino.ArduinoTime base id 0x4400 \
+  instance timeHandler: Arduino.ArduinoTime base id 0x4400
 
   instance rateGroupDriver: Svc.RateGroupDriver base id 0x4500
 
@@ -62,6 +60,6 @@ module LedBlinker {
 
   instance gpioDriver: Arduino.GpioDriver base id 0x4C00
 
-  instance led: Components.Led base id 0x10000 \
+  instance led: Components.Led base id 0x10000
 
 }
