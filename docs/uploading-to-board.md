@@ -29,15 +29,15 @@ Note:
 chmod 0777 /dev/ttyACM0
 
 # Linux
-python3 "~/.arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool.py" --chip esp32 --port "/dev/ttyUSB0" --baud 921600  --before default_reset --after hard_reset write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x1000 "build-fprime-automatic-esp32/arduino-cli-sketch/tmp8lcl76bw.ino.bootloader.bin" 0x8000 "build-fprime-automatic-esp32/arduino-cli-sketch/tmp8lcl76bw.ino.partitions.bin" 0xe000 "~/.arduino15/packages/esp32/hardware/esp32/2.0.9/tools/partitions/boot_app0.bin" 0x10000 "build-artifacts/esp32/LedBlinker/bin/LedBlinker.bin"
+python3 ~/.arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 921600  --before default_reset --after hard_reset write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x1000 build-fprime-automatic-esp32/arduino-cli-sketch/tmp8lcl76bw.ino.bootloader.bin 0x8000 build-fprime-automatic-esp32/arduino-cli-sketch/tmp8lcl76bw.ino.partitions.bin 0xe000 ~/.arduino15/packages/esp32/hardware/esp32/2.0.9/tools/partitions/boot_app0.bin 0x10000 build-artifacts/esp32/LedBlinker/bin/LedBlinker.bin
 
 # MacOS
-python3 "~/Library/Arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool.py" --chip esp32 --port "/dev/ttyUSB0" --baud 921600  --before default_reset --after hard_reset write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x1000 "build-fprime-automatic-esp32/arduino-cli-sketch/tmp8lcl76bw.ino.bootloader.bin" 0x8000 "build-fprime-automatic-esp32/arduino-cli-sketch/tmp8lcl76bw.ino.partitions.bin" 0xe000 "~/Library/Arduino15/packages/esp32/hardware/esp32/2.0.9/tools/partitions/boot_app0.bin" 0x10000 "build-artifacts/esp32/LedBlinker/bin/LedBlinker.bin"
+python3 ~/Library/Arduino15/packages/esp32/tools/esptool_py/4.5.1/esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 921600  --before default_reset --after hard_reset write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0x1000 build-fprime-automatic-esp32/arduino-cli-sketch/tmp8lcl76bw.ino.bootloader.bin 0x8000 build-fprime-automatic-esp32/arduino-cli-sketch/tmp8lcl76bw.ino.partitions.bin 0xe000 ~/Library/Arduino15/packages/esp32/hardware/esp32/2.0.9/tools/partitions/boot_app0.bin 0x10000 build-artifacts/esp32/LedBlinker/bin/LedBlinker.bin
 ```
 
 Note: Change `tmp8lcl76bw` to the actual temporary file name located in `build-fprime-automatic-esp32/arduino-cli-sketch`
 
-## Raspberry Pi Pico W (RP2040)
+## RP2040: Raspberry Pi Pico, Raspberry Pi Pico W, and KB2040
 
 #### Method 1
 
@@ -49,11 +49,11 @@ Hold down the BOOTSEL button on your RPi Pico W as you plug in the micro-USB cab
 Follow this if your RPi Pico W does not mount as a media device.
 
 ```sh
-chmod 0777 /dev/ttyACM0
+sudo chmod 0777 /dev/ttyACM0
 
 # Linux
-python3 -I ~/.arduino15/packages/rp2040/hardware/rp2040/3.3.0/tools/uf2conv.py --serial /dev/ttyACM0 --family RP2040 --deploy build-artifacts/rpipicow/LedBlinker/bin/LedBlinker.uf2
+python3 -I ~/.arduino15/packages/rp2040/hardware/rp2040/3.9.5/tools/uf2conv.py --serial /dev/ttyACM0 --family RP2040 --deploy build-artifacts/rpipicow/LedBlinker/bin/LedBlinker.uf2
 
 # MacOS
-python3 -I ~/Library/Arduino15/packages/rp2040/hardware/rp2040/3.3.0/tools/uf2conv.py --serial /dev/ttyACM0 --family RP2040 --deploy build-artifacts/rpipicow/LedBlinker/bin/LedBlinker.uf2
+python3 -I ~/Library/Arduino15/packages/rp2040/hardware/rp2040/3.9.5/tools/uf2conv.py --serial /dev/ttyACM0 --family RP2040 --deploy build-artifacts/rpipicow/LedBlinker/bin/LedBlinker.uf2
 ```

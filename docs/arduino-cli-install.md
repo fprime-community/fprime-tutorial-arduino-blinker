@@ -37,9 +37,11 @@ Below are board manager URLs for select Arduino boards. You are not required to 
 ```shell
 arduino-cli config add board_manager.additional_urls https://www.pjrc.com/teensy/package_teensy_index.json
 arduino-cli config add board_manager.additional_urls https://adafruit.github.io/arduino-board-index/package_adafruit_index.json
-arduino-cli config add board_manager.additional_urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+arduino-cli config add board_manager.additional_urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+arduino-cli config add board_manager.additional_urls https://arduino.esp8266.com/stable/package_esp8266com_index.json
 arduino-cli config add board_manager.additional_urls https://mcudude.github.io/MegaCore/package_MCUdude_MegaCore_index.json
 arduino-cli config add board_manager.additional_urls https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
+arduino-cli config add board_manager.additional_urls https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectronics_index.json
 ```
 
 Install the new board packages. Only install the ones you have added to your board manager in the previous step.
@@ -47,10 +49,18 @@ Install the new board packages. Only install the ones you have added to your boa
 arduino-cli core update-index
 arduino-cli core install teensy:avr
 arduino-cli core install adafruit:samd
-arduino-cli core install esp32:esp32
+arduino-cli core install esp32:esp32@2.0.9
+arduino-cli core install esp8266:esp8266
 arduino-cli core install MegaCore:avr
-arduino-cli core install rp2040:rp2040
+arduino-cli core install rp2040:rp2040@3.9.5
+arduino-cli core install STMicroelectronics:stm32
 ```
+
+> ESP32: As of 10/27/2024, versions newer than `esp32:esp32@2.0.9` will not work.
+
+> RPI Pico (RP2040): As of 10/27/2024, versions newer than `rp2040:rp2040@3.9.5` will not work.
+
+> RPI Pico 2 (RP2350): You need `rp2040:rp2040@4.0.0` or newer to compile this board.
 
 ## Library Dependencies
 Required Dependencies:

@@ -4,7 +4,7 @@ Now it is time to run on hardware. Connect the microcontroller to the host machi
 
 First, upload the binary/hex file to the board after building. Follow [this guide](./uploading-to-board.md) if the files are not automatically uploading.
 
-Next run the F´ GDS without launching the native compilation (`-n`) and with the dictionary from the build above (`--dictionary ./build-artifacts/<build name>/LedBlinkerTopologyAppDictionary.xml`). Connect it to the USB device by adding the `--comm-adapter`, `--uart-device`, and `--uart-baud` flags
+Next run the F´ GDS without launching the native compilation (`-n`) and with the dictionary from the build above (`--dictionary ./build-artifacts/<build name>/LedBlinkerTopologyAppDictionary.xml`). Connect it to the USB device by adding the `--communication-selection`, `--uart-device`, and `--uart-baud` flags
 
 ```bash
 # In the project root
