@@ -52,15 +52,11 @@ arduino-cli core install adafruit:samd
 arduino-cli core install esp32:esp32@2.0.9
 arduino-cli core install esp8266:esp8266
 arduino-cli core install MegaCore:avr
-arduino-cli core install rp2040:rp2040@3.9.5
+arduino-cli core install rp2040:rp2040
 arduino-cli core install STMicroelectronics:stm32
 ```
 
 > ESP32: As of 10/27/2024, versions newer than `esp32:esp32@2.0.9` will not work.
-
-> RPI Pico (RP2040): As of 10/27/2024, versions newer than `rp2040:rp2040@3.9.5` will not work.
-
-> RPI Pico 2 (RP2350): You need `rp2040:rp2040@4.0.0` or newer to compile this board.
 
 ## Library Dependencies
 Required Dependencies:
