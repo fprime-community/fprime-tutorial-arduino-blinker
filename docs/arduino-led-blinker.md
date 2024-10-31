@@ -9,10 +9,10 @@ This version uses a scaled down deployment of F´ to account for the limited res
 
 In order to run through this tutorial, users should first do the following:
 
-1. Follow the [Hello World Tutorial](https://github.jpl.nasa.gov/pages/ashleysa/fprime-website-mkdocs-dev/latest/tutorials-hello-world/docs/hello-world)
-2. Ensure F´ tools have been [bootstrapped](https://github.jpl.nasa.gov/pages/ashleysa/fprime-website-mkdocs-dev/latest/tutorials-hello-world/docs/hello-world#bootstrapping-f)
-3. Acquire and set up the appropriate [hardware](https://github.jpl.nasa.gov/pages/ashleysa/fprime-website-mkdocs-dev/latest/tutorials-led-blinker/docs/hardware/) for this tutorial
-4. Follow the [arduino-cli installation guide](https://github.jpl.nasa.gov/pages/ashleysa/fprime-website-mkdocs-dev/latest/tutorials-arduino-led-blinker/docs/arduino-cli-install/)
+1. Follow the [Hello World Tutorial](https://fprime.jpl.nasa.gov/latest/tutorials-hello-world/docs/hello-world)
+2. Ensure F´ tools have been [bootstrapped](https://fprime.jpl.nasa.gov/latest/tutorials-hello-world/docs/hello-world#bootstrapping-f)
+3. Acquire and set up the appropriate [hardware](https://fprime.jpl.nasa.gov/latest/tutorials-led-blinker/docs/hardware/) for this tutorial
+4. Follow the [arduino-cli installation guide](https://fprime.jpl.nasa.gov/latest/tutorials-arduino-led-blinker/docs/arduino-cli-install/)
 
 ## Tutorial Steps
 
@@ -28,7 +28,7 @@ This tutorial is composed of the following steps:
 
 ## 1. LED Blinker: Project Setup
 
-First, make sure to read the tutorial's [introduction](https://github.jpl.nasa.gov/pages/ashleysa/fprime-website-mkdocs-dev/latest/tutorials-arduino-led-blinker/docs/arduino-led-blinker/) and follow the [prerequisites section](#prerequisites). Then set up a new F´ project using the `fprime-bootstrap project` command. Please select a project name of `led-blinker`.
+First, make sure to read the tutorial's [introduction](https://fprime.jpl.nasa.gov/latest/tutorials-arduino-led-blinker/docs/arduino-led-blinker/) and follow the [prerequisites section](#prerequisites). Then set up a new F´ project using the `fprime-bootstrap project` command. Please select a project name of `led-blinker`.
 
 ```shell
 fprime-bootstrap project
@@ -36,7 +36,7 @@ Project name (MyProject): led-blinker
 ```
 
 !!! note
-    Complete instructions on setting-up a new project are available in the [hello world tutorial](https://github.jpl.nasa.gov/pages/ashleysa/fprime-website-mkdocs-dev/latest/tutorials-hello-world/docs/hello-world#1-creating-an-f-project).
+    Complete instructions on setting-up a new project are available in the [hello world tutorial](https://fprime.jpl.nasa.gov/latest/tutorials-hello-world/docs/hello-world#1-creating-an-f-project).
 
 !!! note
     Remember to source the virtual environment after creating the project.
@@ -138,7 +138,7 @@ The purpose of this exercise is to walk you through the creation and initial imp
 
 ### Component Design
 
-In order for our component to blink an LED, it needs to accept a command to turn on the LED and drive a GPIO pin via a port call to the GPIO driver. It will also need a [rate group](https://github.jpl.nasa.gov/pages/ashleysa/fprime-website-mkdocs-dev/latest/documentation/user-manual/design/rate-group.md) input port to control the timing of the blink. Additionally, we will define events and telemetry channels to report component state, and a parameter to control the period of the blink.
+In order for our component to blink an LED, it needs to accept a command to turn on the LED and drive a GPIO pin via a port call to the GPIO driver. It will also need a [rate group](https://fprime.jpl.nasa.gov/latest/documentation/user-manual/design/rate-group.md) input port to control the timing of the blink. Additionally, we will define events and telemetry channels to report component state, and a parameter to control the period of the blink.
 
 This component design is captured in the block diagram below with input ports on the left and output ports on the right. Ports for standard F´ functions (e.g. commands, events, telemetry, and parameters) are circled in green.
 
@@ -848,4 +848,4 @@ Test the component integration with the following steps:
 
 Congratulations you've now run on hardware.
 
-[Return to Tutorials](https://github.jpl.nasa.gov/pages/ashleysa/fprime-website-mkdocs-dev/latest/documentation/tutorials/){ .md-button .md-button--primary }
+[Return to Tutorials](https://fprime.jpl.nasa.gov/latest/documentation/tutorials/){ .md-button .md-button--primary }
