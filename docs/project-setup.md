@@ -11,4 +11,9 @@ Project name (MyProject): led-blinker
 
 > Remember to source the virtual environment after creating the project.
 
+```sh
+# In led-blinker
+. fprime-venv/bin/activate
+```
+
 ### Next Step: [Building for Arduino](./building-for-arduino.md).

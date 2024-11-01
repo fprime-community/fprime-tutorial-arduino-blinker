@@ -8,7 +8,7 @@ Now it is time to add a GPIO driver to our system and attach it to the `led` com
 
 Add to "Passive Component" section of `led-blinker/LedBLinker/Top/instance.fpp`:
 ```
-  instance gpioDriver: Arduino.GpioDriver base id 0x4C00
+  instance gpioDriver: Arduino.GpioDriver base id 0x5000
 ```
 
 Add to the instance list of `led-blinker/LedBLinker/Top/topology.fpp`:
@@ -57,6 +57,6 @@ This code tells the GPIO driver to open pin LED_BUILTIN (usually pin 13) as an o
 
 ## Conclusion
 
-Congratulations!  You've wired your component to the rate group driver and GPIO driver components. It is time to try it on hardware.
+Congratulations! You've wired your component to the rate group driver and GPIO driver components. It is time to try it on hardware.
 
 ### Next Step: [Running on Hardware](./running-on-hardware.md).
