@@ -12,11 +12,25 @@ git submodule add https://github.com/fprime-community/fprime-arduino.git
 ```
 
 Add `fprime-arduino` as a library and change the default build toolchain to `teensy41` in `led-blinker/settings.ini` after the framework path.
-```
+```.ini
 library_locations: ./fprime-arduino
 default_toolchain: teensy41
 ```
 > If you would like to use a different board as your default toolchain, you may change `teensy41` to your desired board.
+
+## Adding fprime-baremetal
+
+Next, add the `fprime-baremetal` package as a submodule into your project root.
+
+```shell
+# In led-blinker
+git submodule add https://github.com/fprime-community/fprime-baremetal.git
+```
+
+Add `fprime-baremetal` as an additional library into `led-blinker/settings.ini`, separated by a `:`. It should look like:
+```.ini
+library_locations: ./fprime-arduino:./fprime-baremetal
+```
 
 ## Modifying F´ Configuration Files (Optional)
 
@@ -70,15 +84,7 @@ fprime-util generate
 fprime-util build
 ```
 
-If you wish to test other Arduino builds, append the build name after `fprime-util generate` and `fprime-util build`. Tested boards are listed below (build name in parenthesis):
-- Teensy 3.2 (teensy32)
-- Teensy 4.0 (teensy40)
-- Teensy 4.1 (teensy41)
-- Adafruit Feather M0 (featherM0)
-- Adafruit Feather RP2040 (featherrp2040rfm)
-- SparkFun Thing Plus RP2040 (thingplusrp2040)
-- ESP32 Dev Module (esp32)
-- Raspberry Pi Pico W (rpipicow)
+If you wish to test other Arduino builds, append the build name after `fprime-util generate` and `fprime-util build`. Tested boards are listed [here](https://github.com/fprime-community/fprime-arduino/blob/add-more-boards/docs/board-list.md)
 
 ## Conclusion
 

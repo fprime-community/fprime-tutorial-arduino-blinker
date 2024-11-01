@@ -2,13 +2,13 @@
 
 Now it is time to run on hardware. Connect the microcontroller to the host machine via USB.
 
-First, upload the binary/hex file to the board after building. Follow [this guide](./uploading-to-board.md) if the files are not automatically uploading.
+First, upload the binary/hex file to the board after building. Reference the [board list](https://github.com/fprime-community/fprime-arduino/blob/main/docs/board-list.md) for guidance on uploading the binaries for your board.
 
-Next run the F´ GDS without launching the native compilation (`-n`) and with the dictionary from the build above (`--dictionary ./build-artifacts/<build name>/LedBlinkerTopologyAppDictionary.xml`). Connect it to the USB device by adding the `--comm-adapter`, `--uart-device`, and `--uart-baud` flags
+Next run the F´ GDS without launching the native compilation (`-n`) and with the dictionary from the build above (`--dictionary ./build-artifacts/<build name>/LedBlinkerTopologyAppDictionary.xml`). Connect it to the USB device by adding the `--communication-selection`, `--uart-device`, and `--uart-baud` flags
 
-```bash
+```sh
 # In the project root
-fprime-gds -n --dictionary ./build-artifacts/teensy41/LedBlinker/dict/LedBlinkerTopologyAppDictionary.xml --comm-adapter uart --uart-device /dev/ttyACM0 --uart-baud 115200
+fprime-gds -n --dictionary ./build-artifacts/teensy41/LedBlinker/dict/LedBlinkerTopologyAppDictionary.xml --communication-selection uart --uart-device /dev/ttyACM0 --uart-baud 115200
 ```
 
 For MacOS users, you may have to install `pyserial`: `pip install pyserial`
@@ -18,7 +18,7 @@ For MacOS users, you may have to install `pyserial`: `pip install pyserial`
 > `/dev/ttyACM0` may vary for your system/device. It may also be `/dev/ttyUSB0`. For MacOS, it will be along the lines of `/dev/tty.usbmodem12345`. Change accordingly.
 > To view the list of your connected devices, run: `ls /dev/tty*`.
 
-> The green circle should now appear on the top right of F´ GDS.
+> You should be able to view the GDS on [http://127.0.0.1:5000/](http://127.0.0.1:5000/). The green circle should now appear on the top right of F´ GDS.
 
 ## Testing the Topology
 
@@ -33,4 +33,6 @@ Test the component integration with the following steps:
 
 # Conclusion
 
-Congratulations you've now run on hardware.
+Congratulations! You have now completed the F´ Arduino on-hardware tutorial. You should now have a solid understanding of building an F´ project that runs on hardware!
+
+Return to our tutorials page here: [https://nasa.github.io/fprime/Tutorials/README.html](https://nasa.github.io/fprime/Tutorials/README.html)

@@ -5,4 +5,6 @@
 [submodule "fprime-arduino"]
 	path = fprime-arduino
 	url = https://github.com/fprime-community/fprime-arduino.git
-	branch = devel
+[submodule "fprime-baremetal"]
+	path = fprime-baremetal
+	url = https://github.com/fprime-community/fprime-baremetal.git

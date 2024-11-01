@@ -9,4 +9,3 @@ The microcontroller must have sufficient FLASH memory and SRAM to run F´. The c
 ## Wiring Diagram
 
 For this tutorial, the on-board LED pin will be used (LED_BUILTIN). For most Arduino microcontrollers, this is GPIO pin 13. For platforms that do not have an on-board LED pin readily available, another pin should be chosen, noted, and used in-place of LED_BUILTIN (13).
-

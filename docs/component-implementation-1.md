@@ -140,9 +140,9 @@ Exit the text editor, and run the following in the `led-blinker/Components/Led` 
 fprime-util impl
 ```
 
-This command will auto generate two files: Led.hpp-template and Led.cpp-template. These files contain the stub implementation for the component. These should now include stubs for this newly added command.
+This command will auto generate two files: Led.template.hpp and Led.cpp-template. These files contain the stub implementation for the component. These should now include stubs for this newly added command.
 
-Inside your `led-blinker/Components/Led` directory, open `Led.hpp-template` and copy the following block of code. Paste it as a private function above the private member variabls in `Led.hpp`.
+Inside your `led-blinker/Components/Led` directory, open `Led.template.hpp` and copy the following block of code. Paste it as a private function above the private member variabls in `Led.hpp`.
 
 ```cpp
       //! Implementation for BLINKING_ON_OFF command handler
@@ -156,7 +156,7 @@ Inside your `led-blinker/Components/Led` directory, open `Led.hpp-template` and 
       );
 ```
 
-Inside your `led-blinker/Components/Led` directory, open `Led.cpp-template` and copy the following block of code and paste it into `Led.cpp` below the destructor.
+Inside your `led-blinker/Components/Led` directory, open `Led.template.cpp` and copy the following block of code and paste it into `Led.cpp` below the destructor.
 
 ```cpp
   void Led ::
@@ -171,7 +171,7 @@ Inside your `led-blinker/Components/Led` directory, open `Led.cpp-template` and 
   }
 ```
 
-> This pattern of copying implementations from *-template files into our cpp and hpp files will be repeated throughout the rest of this tutorial.
+> This pattern of copying implementations from template files into our cpp and hpp files will be repeated throughout the rest of this tutorial.
 
 
 Now we will implement the behavior of the `BLINKING_ON_OFF` command. An initial implementation is shown below and may be copied into `Led.cpp` in-place of the stub we just copied in.
@@ -236,7 +236,7 @@ Back inside your `led-blinker/Components/Led` directory, open the `Led.fpp` file
             format "Invalid Blinking Argument: {}"
 
         @ Reports the state we set to blinking.
-        event SetBlinkingState(state: Fw.On) \
+        event SetBlinkingState($state: Fw.On) \
             severity activity high \
             format "Set blinking state to {}."
 ```
@@ -293,4 +293,3 @@ Congratulations!  You have now implemented some basic functionality in a new F´
 
 
 ### Next Step: [Initial Component Integration](./initial-integration.md).
-

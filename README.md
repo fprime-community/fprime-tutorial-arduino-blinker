@@ -11,7 +11,7 @@ In order to run through this tutorial, users should first do the following:
 1. Follow the [Hello World Tutorial](https://fprime-community.github.io/fprime-tutorial-hello-world/)
 2. Ensure F´ tools have been [bootstrapped](https://fprime-community.github.io/fprime-tutorial-hello-world/docs/NewProject.html#bootstrapping-f)
 3. Acquire and set up the appropriate [hardware](docs/hardware.md) for this tutorial
-4. Follow the [arduino-cli installation guide](docs/arduino-cli-install.md)
+4. Follow the [arduino-cli installation guide](https://github.com/fprime-community/fprime-arduino/blob/main/docs/arduino-cli-install.md)
 
 ## Tutorial Steps
 
