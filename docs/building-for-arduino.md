@@ -32,22 +32,6 @@ Add `fprime-baremetal` as an additional library into `led-blinker/settings.ini`,
 library_locations: ./fprime-arduino:./fprime-baremetal
 ```
 
-## Modifying F´ Configuration Files (Optional)
-
-If you are building for a system with low memory (< 100KB RAM), this step is recommended.
-
-Copy the default F´ configuration files into your project root.
-```shell
-cp -r fprime/config .
-```
-
-Reference the [`config`](../config/) files in this repository and modify your `config` files accordingly. Or, you may clone this repository and copy the entire `config` directory into your project.
-
-Then redirect the configuration path in your `led-blinker/settings.ini` by adding the following line:
-```
-config_directory: ./config
-```
-
 ## Add Arduino Deployment
 
 In order to produce an executable to run the software, users need to create a deployment. A deployment is one software executable that contains the main entry point, and an F´ system topology. We will be using a custom deployment that autogenerates an Arduino deployment.
@@ -73,7 +57,21 @@ Add LedBlinker to led-blinker/project.cmake at end of file? (yes/no) [yes]: yes
 ```
 > Use the default response for any other questions asked.
 
-In order to check that the deployment was created successfully, the user can generate a build cache and build the deployment. This will generate and build the code for the current host system, not the remote embedded hardware allowing a local test during development. 
+In order to check that the deployment was created successfully, the user can generate a build cache and build the deployment. This will generate and build the code for the current host system, not the remote embedded hardware allowing a local test during development.
+
+## Modifying F´ Configuration Files
+
+Copy the F´ configuration files provided by the deployment cookiecutter into your project root.
+```shell
+cp -r LedBlinker/config .
+```
+
+You may reference the [`config/`](../config/) files in this repository and modify your `config/` files accordingly. Or, you may clone this repository and copy the entire `config/` directory into your project.
+
+Then redirect the configuration path in your `led-blinker/settings.ini` by adding the following line:
+```
+config_directory: ./config
+```
 
 ## Test Deployment
 
