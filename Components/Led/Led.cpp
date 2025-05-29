@@ -5,7 +5,7 @@
 // ======================================================================
 
 #include <Components/Led/Led.hpp>
-#include <FpConfig.hpp>
+#include <config/FpConfig.hpp>
 
 namespace Components {
 
@@ -36,7 +36,7 @@ void Led ::parameterUpdated(FwPrmIdType id) {
 // Handler implementations for user-defined typed input ports
 // ----------------------------------------------------------------------
 
-void Led ::run_handler(const NATIVE_INT_TYPE portNum, NATIVE_UINT_TYPE context) {
+void Led ::run_handler(const FwIndexType portNum, U32 context) {
     // Read back the parameter value
     Fw::ParamValid isValid;
     U32 interval = this->paramGet_BLINK_INTERVAL(isValid);

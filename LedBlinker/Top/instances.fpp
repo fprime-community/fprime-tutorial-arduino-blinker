@@ -18,6 +18,11 @@ module LedBlinker {
     stack size Default.STACK_SIZE \
     priority 101
 
+  instance comQueue: Svc.ComQueue base id 0x0700 \
+      queue size Default.QUEUE_SIZE \
+      stack size Default.STACK_SIZE \
+      priority 100 \
+
   instance eventLogger: Svc.ActiveLogger base id 0x0B00 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
@@ -42,7 +47,7 @@ module LedBlinker {
 
   instance commDriver: Arduino.StreamDriver base id 0x4000
 
-  instance framer: Svc.Framer base id 0x4100
+  instance framer: Svc.FprimeFramer base id 0x4100
 
   instance fatalHandler: Baremetal.FatalHandler base id 0x4300
 
@@ -52,11 +57,17 @@ module LedBlinker {
 
   instance textLogger: Svc.PassiveTextLogger base id 0x4600
 
-  instance deframer: Svc.Deframer base id 0x4700
+  instance deframer: Svc.FprimeDeframer base id 0x4700
 
   instance systemResources: Svc.SystemResources base id 0x4800
 
   instance rateDriver: Arduino.HardwareRateDriver base id 0x4900
+
+  instance comStub: Svc.ComStub base id 0x4B00
+
+  instance frameAccumulator: Svc.FrameAccumulator base id 0x4D00
+
+  instance fprimeRouter: Svc.FprimeRouter base id 0x4E00
 
   instance gpioDriver: Arduino.GpioDriver base id 0x5000
 

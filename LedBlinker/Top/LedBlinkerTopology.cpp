@@ -9,7 +9,7 @@
 
 // Necessary project-specified types
 #include <Fw/Types/MallocAllocator.hpp>
-#include <Svc/FramingProtocol/FprimeProtocol.hpp>
+#include <Svc/FrameAccumulator/FrameDetector/FprimeFrameDetector.hpp>
 
 // Allows easy reference to objects in FPP/autocoder required namespaces
 using namespace LedBlinker;
@@ -18,23 +18,23 @@ using namespace LedBlinker;
 // initialization phase.
 Fw::MallocAllocator mallocator;
 
-// The reference topology uses the F´ packet protocol when communicating with the ground and therefore uses the F´
-// framing and deframing implementations.
-Svc::FprimeFraming framing;
-Svc::FprimeDeframing deframing;
+// FprimeFrameDetector is used to configure the FrameAccumulator to detect F Prime frames
+Svc::FrameDetectors::FprimeFrameDetector frameDetector;
+
+Svc::ComQueue::QueueConfigurationTable configurationTable;
 
 // The reference topology divides the incoming clock signal (1Hz) into sub-signals: 1/100Hz, 1/200Hz, and 1/1000Hz
-Svc::RateGroupDriver::DividerSet rateGroupDivisors{{{100, 0}, {200, 0}, {1000, 0}}};
+Svc::RateGroupDriver::DividerSet rateGroupDivisorsSet{{{100, 0}, {200, 0}, {1000, 0}}};
 
 // Rate groups may supply a context token to each of the attached children whose purpose is set by the project. The
 // reference topology sets each token to zero as these contexts are unused in this project.
-NATIVE_INT_TYPE rateGroup1Context[FppConstant_PassiveRateGroupOutputPorts::PassiveRateGroupOutputPorts] = {};
+U32 rateGroup1Context[FppConstant_PassiveRateGroupOutputPorts::PassiveRateGroupOutputPorts] = {};
 
 // A number of constants are needed for construction of the topology. These are specified here.
 enum TopologyConstants {
     COM_BUFFER_SIZE   = 140,
     COM_BUFFER_COUNT  = 3,
-    BUFFER_MANAGER_ID = 200
+    BUFFER_MANAGER_ID = 200,
 };
 
 /**
@@ -46,7 +46,7 @@ enum TopologyConstants {
  */
 void configureTopology() {
     // Rate group driver needs a divisor list
-    rateGroupDriver.configure(rateGroupDivisors);
+    rateGroupDriver.configure(rateGroupDivisorsSet);
 
     // Rate groups require context arrays.
     rateGroup1.configure(rateGroup1Context, FW_NUM_ARRAY_ELEMENTS(rateGroup1Context));
@@ -58,9 +58,19 @@ void configureTopology() {
     buffMgrBins.bins[0].numBuffers = COM_BUFFER_COUNT;
     bufferManager.setup(BUFFER_MANAGER_ID, 0, mallocator, buffMgrBins);
 
-    // Framer and Deframer components need to be passed a protocol handler
-    framer.setup(framing);
-    deframer.setup(deframing);
+    // FprimeFrameDetector is used to configure the FrameAccumulator to detect F Prime frames
+    frameAccumulator.configure(frameDetector, 1, mallocator, 2048);
+
+    // Note: Uncomment when using Svc:TlmPacketizer
+    // tlmSend.setPacketList(LedBlinkerPacketsPkts, LedBlinkerPacketsIgnore, 1);
+    // Events (highest-priority)
+    configurationTable.entries[0] = {.depth = 10, .priority = 0};
+    // Telemetry
+    configurationTable.entries[1] = {.depth = 25, .priority = 2};
+    // File Downlink
+    configurationTable.entries[2] = {.depth = 1, .priority = 1};
+    // Allocation identifier is 0 as the MallocAllocator discards it
+    comQueue.configure(configurationTable, 0, mallocator);
 
     // Configure built-in LED GPIO if available
 #ifndef NO_ONBOARD_LED
@@ -77,10 +87,12 @@ void setupTopology(const TopologyState& state) {
     setBaseIds();
     // Autocoded connection wiring. Function provided by autocoder.
     connectComponents();
-    // Autocoded command registration. Function provided by autocoder.
-    regCommands();
+    // Autocoded configuration. Function provided by autocoder.
+    configComponents(state);
     // Project-specific component configuration. Function provided above. May be inlined, if desired.
     configureTopology();
+    // Autocoded command registration. Function provided by autocoder.
+    regCommands();
     // Autocoded parameter loading. Function provided by autocoder.
     // loadParameters();
     // Autocoded task kick-off (active components). Function provided by autocoder.
