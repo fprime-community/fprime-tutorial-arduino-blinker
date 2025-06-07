@@ -5,9 +5,12 @@
 // ======================================================================
 // Provides access to autocoded functions
 #include <LedBlinker/Top/LedBlinkerTopologyAc.hpp>
+// Note: Uncomment when using Svc:TlmPacketizer
+// #include <LedBlinker/Top/LedBlinkerPacketsAc.hpp>
 #include <config/FppConstantsAc.hpp>
 
 // Necessary project-specified types
+#include <config/FprimeArduino.hpp>
 #include <Fw/Types/MallocAllocator.hpp>
 #include <Svc/FrameAccumulator/FrameDetector/FprimeFrameDetector.hpp>
 
@@ -24,7 +27,7 @@ Svc::FrameDetectors::FprimeFrameDetector frameDetector;
 Svc::ComQueue::QueueConfigurationTable configurationTable;
 
 // The reference topology divides the incoming clock signal (1Hz) into sub-signals: 1/100Hz, 1/200Hz, and 1/1000Hz
-Svc::RateGroupDriver::DividerSet rateGroupDivisorsSet{{{100, 0}, {200, 0}, {1000, 0}}};
+Svc::RateGroupDriver::DividerSet rateGroupDivisors{{{100, 0}, {200, 0}, {1000, 0}}};
 
 // Rate groups may supply a context token to each of the attached children whose purpose is set by the project. The
 // reference topology sets each token to zero as these contexts are unused in this project.
@@ -46,7 +49,7 @@ enum TopologyConstants {
  */
 void configureTopology() {
     // Rate group driver needs a divisor list
-    rateGroupDriver.configure(rateGroupDivisorsSet);
+    rateGroupDriver.configure(rateGroupDivisors);
 
     // Rate groups require context arrays.
     rateGroup1.configure(rateGroup1Context, FW_NUM_ARRAY_ELEMENTS(rateGroup1Context));
@@ -72,10 +75,7 @@ void configureTopology() {
     // Allocation identifier is 0 as the MallocAllocator discards it
     comQueue.configure(configurationTable, 0, mallocator);
 
-    // Configure built-in LED GPIO if available
-#ifndef NO_ONBOARD_LED
     gpioDriver.open(Arduino::DEF_LED_BUILTIN, Arduino::GpioDriver::GpioDirection::OUT);
-#endif
 }
 
 // Public functions for use in main program are namespaced with deployment name LedBlinker
@@ -94,10 +94,11 @@ void setupTopology(const TopologyState& state) {
     // Autocoded command registration. Function provided by autocoder.
     regCommands();
     // Autocoded parameter loading. Function provided by autocoder.
+    // DISABLED FOR ARDUINO BOARDS. Loading parameters are not supported because there is typically no file system.
     // loadParameters();
     // Autocoded task kick-off (active components). Function provided by autocoder.
     startTasks(state);
-
+    
     rateDriver.configure(1);
     commDriver.configure(&Serial);
     rateDriver.start();

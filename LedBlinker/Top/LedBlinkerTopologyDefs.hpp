@@ -46,16 +46,16 @@ struct TopologyState {
  * ```
  */
 namespace PingEntries {
-namespace tlmSend {
+namespace LedBlinker_tlmSend {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace cmdDisp {
+namespace LedBlinker_cmdDisp {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace eventLogger {
+namespace LedBlinker_eventLogger {
 enum { WARN = 3, FATAL = 5 };
 }
-namespace rateGroup1 {
+namespace LedBlinker_rateGroup1 {
 enum { WARN = 3, FATAL = 5 };
 }
 }  // namespace PingEntries

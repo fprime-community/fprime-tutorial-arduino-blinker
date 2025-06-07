@@ -7,6 +7,22 @@
         <channel name="rateGroup1.MaxCycleTime"/>
         <channel name="rateGroup1.CycleTime"/>
         <channel name="rateGroup1.CycleCount"/>
+        <channel name="bufferManager.TotalBuffs"/>
+        <channel name="bufferManager.CurrBuffs"/>
+        <channel name="bufferManager.HiBuffs"/>
+        <!-- Uncomment to use Svc::TlmPacketizer -->
+        <!-- <channel name="tlmSend.SendLevel"/> -->
+    </packet>
+
+    <packet name="CDHErrors" id="2" level="1">
+        <channel name="rateGroup1.RgCycleSlips"/>
+        <channel name="bufferManager.NoBuffs"/>
+        <channel name="bufferManager.EmptyBuffs"/>
+    </packet>
+
+    <packet name="Comms" id="4" level="1">
+        <channel name="comQueue.comQueueDepth"/>
+        <channel name="comQueue.buffQueueDepth"/>
     </packet>
 
     <packet name="SystemRes1" id="5" level="2">
@@ -34,11 +50,6 @@
         <channel name="systemResources.CPU_13"/>
         <channel name="systemResources.CPU_14"/>
         <channel name="systemResources.CPU_15"/>
-    </packet>
-
-    <packet name="LedChannels" id="8" level="1">
-        <channel name="led.LedTransitions"/>
-        <channel name="led.BlinkingState"/>
     </packet>
 
     <!-- Ignored packets -->

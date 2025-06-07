@@ -54,11 +54,6 @@ cd arduino-led-blinker
 
 Follow the [arduino-cli installation guide](https://github.com/fprime-community/fprime-arduino/blob/main/docs/arduino-cli-install.md).
 
-Install `fprime-arduino` dependencies:
-```sh
-pip install -r lib/fprime-arduino/requirements.txt
-```
-
 ---
 
 ## 2. Building for Arduino Microcontrollers
@@ -81,6 +76,11 @@ default_toolchain: teensy41
 
 > [!NOTE]
 > If you would like to use a different board as your default toolchain, you may change `teensy41` to your desired board. The list of available boards in the `fprime-arduino` toolchain can be found [here](https://github.com/fprime-community/fprime-arduino/blob/main/docs/board-list.md).
+
+Install `fprime-arduino` dependencies:
+```sh
+pip install -r lib/fprime-arduino/requirements.txt
+```
 
 ### Adding fprime-baremetal
 
@@ -717,8 +717,9 @@ void Led ::parameterUpdated(FwPrmIdType id) {
         case PARAMID_BLINK_INTERVAL: {
             // Read back the parameter value
             const U32 interval = this->paramGet_BLINK_INTERVAL(isValid);
-            // NOTE: isValid is always VALID in parameterUpdated as it was just properly set
-            FW_ASSERT(isValid == Fw::ParamValid::VALID, static_cast<FwAssertArgType>(isValid));
+            
+            // Force interval to be 1 when invalid or not set
+            interval = ((Fw::ParamValid::INVALID == isValid) || (Fw::ParamValid::UNINIT == isValid)) ? 1 : interval;
 
             // Emit the blink interval set event
             // TODO: Emit an event with, severity activity high, named BlinkIntervalSet that takes in an argument of

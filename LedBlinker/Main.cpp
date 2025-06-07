@@ -4,10 +4,10 @@
 //
 // ======================================================================
 // Used to access topology functions
-#include <LedBlinker/Top/LedBlinkerTopology.hpp>
 #include <LedBlinker/Top/LedBlinkerTopologyAc.hpp>
+#include <LedBlinker/Top/LedBlinkerTopology.hpp>
 
-// Used for TaskRunner
+// Used for Baremetal TaskRunner
 #include <fprime-baremetal/Os/TaskRunner/TaskRunner.hpp>
 
 // Used for logging
@@ -17,12 +17,12 @@
  * \brief setup the program
  *
  * This is an extraction of the Arduino setup() function.
- *
+ * 
  */
 void setup() {
     // Initialize OSAL
     Os::init();
-    
+
     // Setup Serial and Logging
     Serial.begin(115200);
     static_cast<Os::Arduino::StreamConsoleHandle*>(Os::Console::getSingleton().getHandle())->setStreamHandler(Serial);
@@ -42,7 +42,7 @@ void setup() {
  * \brief run the program
  *
  * This is an extraction of the Arduino loop() function.
- *
+ * 
  */
 void loop() {
 #ifdef USE_BASIC_TIMER

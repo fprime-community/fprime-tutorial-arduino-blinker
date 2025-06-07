@@ -13,25 +13,30 @@ module LedBlinker {
   # Active component instances
   # ----------------------------------------------------------------------
 
-  instance cmdDisp: Svc.CommandDispatcher base id 0x0500 \
+  instance cmdDisp: Svc.CommandDispatcher base id 0x0100 \
     queue size Default.QUEUE_SIZE\
     stack size Default.STACK_SIZE \
     priority 101
 
-  instance comQueue: Svc.ComQueue base id 0x0700 \
+  instance comQueue: Svc.ComQueue base id 0x0200 \
       queue size Default.QUEUE_SIZE \
       stack size Default.STACK_SIZE \
       priority 100 \
 
-  instance eventLogger: Svc.ActiveLogger base id 0x0B00 \
+  instance eventLogger: Svc.ActiveLogger base id 0x0300 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
     priority 98
 
-  instance tlmSend: Svc.TlmChan base id 0x0C00 \
+  instance tlmSend: Svc.TlmChan base id 0x0400 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
     priority 97
+
+  instance led: Components.Led base id 0x0E00 \
+    queue size Default.QUEUE_SIZE \
+    stack size Default.STACK_SIZE \
+    priority 95
 
   # ----------------------------------------------------------------------
   # Queued component instances
@@ -41,9 +46,9 @@ module LedBlinker {
   # Passive component instances
   # ----------------------------------------------------------------------
 
-  instance rateGroup1: Svc.PassiveRateGroup base id 0x0200
+  instance rateGroup1: Svc.PassiveRateGroup base id 0x1000
 
-  instance bufferManager: Svc.BufferManager base id 0x1000
+  instance bufferManager: Svc.BufferManager base id 0x2000
 
   instance commDriver: Arduino.StreamDriver base id 0x4000
 
@@ -70,7 +75,5 @@ module LedBlinker {
   instance fprimeRouter: Svc.FprimeRouter base id 0x4E00
 
   instance gpioDriver: Arduino.GpioDriver base id 0x5000
-
-  instance led: Components.Led base id 0x10000
 
 }
