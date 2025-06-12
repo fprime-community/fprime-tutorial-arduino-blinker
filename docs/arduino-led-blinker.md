@@ -410,7 +410,17 @@ fprime-util new --deployment
 This will ask for some input, respond with the following answers:
 ```shell
 [INFO] Cookiecutter source: https://github.com/fprime-community/fprime-arduino-deployment-cookiecutter.git
-  [1/1] deployment_name (fprime-arduino-deployment): LedBlinker
+  [1/3] Deployment name (fprime-arduino-deployment): LedBlinker
+  [2/3] Select communication driver type
+    1 - UART
+    2 - TcpServer
+    3 - TcpClient
+    Choose from [1/2/3] (1): 1
+  [3/3] Select file system type
+    1 - None
+    2 - SD_Card
+    3 - MicroFS
+    Choose from [1/2/3] (1): 1
 [INFO] Found CMake file at 'arduino-led-blinker/project.cmake'
 Add LedBlinker to arduino-led-blinker/project.cmake at end of file? (yes/no) [yes]: yes
 [INFO] New deployment successfully created: /home/ethan/fprime-projects/arduino-led-blinker/LedBlinker
