@@ -52,7 +52,8 @@ cd arduino-led-blinker
 . fprime-venv/bin/activate
 ```
 
-Follow the [arduino-cli installation guide](https://github.com/fprime-community/fprime-arduino/blob/main/docs/arduino-cli-install.md).
+> [!IMPORTANT]
+> Follow the [arduino-cli installation guide](https://github.com/fprime-community/fprime-arduino/blob/main/docs/arduino-cli-install.md).
 
 ---
 
@@ -65,6 +66,7 @@ This section will guide you on converting your project to build for Arduino micr
 First, add the `fprime-arduino` package as a submodule into the `lib/` directory.
 
 ```sh
+# In arduino-led-blinker
 git submodule add https://github.com/fprime-community/fprime-arduino.git lib/fprime-arduino
 ```
 
@@ -79,6 +81,7 @@ default_toolchain: teensy41
 
 Install `fprime-arduino` dependencies:
 ```sh
+# In arduino-led-blinker
 pip install -r lib/fprime-arduino/requirements.txt
 ```
 
@@ -87,6 +90,7 @@ pip install -r lib/fprime-arduino/requirements.txt
 Next, add the `fprime-baremetal` package as a submodule into your project root.
 
 ```sh
+# In arduino-led-blinker
 git submodule add https://github.com/fprime-community/fprime-baremetal.git lib/fprime-baremetal
 ```
 
@@ -108,6 +112,7 @@ deployment_cookiecutter: https://github.com/fprime-community/fprime-arduino-depl
 
 Now, you are ready to generate a build cache using the following command:
 ```sh
+# In arduino-led-blinker
 fprime-util generate
 ```
 > [!NOTE]
@@ -121,7 +126,7 @@ The purpose of this exercise is to walk you through the creation and initial imp
 
 ### Component Design
 
-In order for our component to blink an LED, it needs to accept a command to turn on the LED and drive a GPIO pin via a port call to the GPIO driver. It will also need a [rate group](https://fprime.jpl.nasa.gov/latest/documentation/user-manual/design/rate-group.md) input port to control the timing of the blink. Additionally, we will define events and telemetry channels to report component state, and a parameter to control the period of the blink.
+In order for our component to blink an LED, it needs to accept a command to turn on the LED and drive a GPIO pin via a port call to the GPIO driver. It will also need a [rate group](https://fprime.jpl.nasa.gov/latest/docs/user-manual/design-patterns/rate-group/) input port to control the timing of the blink. Additionally, we will define events and telemetry channels to report component state, and a parameter to control the period of the blink.
 
 This component design is captured in the block diagram below with input ports on the left and output ports on the right. Ports for standard F´ functions (e.g. commands, events, telemetry, and parameters) are circled in green.
 
@@ -349,6 +354,7 @@ with:
 Run the following to verify your component is building correctly.
 
 ```bash
+# In arduino-led-blinker/Components/Led
 fprime-util build
 ```
 
@@ -622,8 +628,9 @@ void Led ::run_handler(FwIndexType portNum, U32 context) {
     // Read back the parameter value
     Fw::ParamValid isValid = Fw::ParamValid::INVALID;
     U32 interval = this->paramGet_BLINK_INTERVAL(isValid);
-    FW_ASSERT((isValid != Fw::ParamValid::INVALID) && (isValid != Fw::ParamValid::UNINIT),
-              static_cast<FwAssertArgType>(isValid));
+
+    // Force interval to be 1 when invalid or not set
+    interval = ((Fw::ParamValid::INVALID == isValid) || (Fw::ParamValid::UNINIT == isValid)) ? 1 : interval;
 
     // Only perform actions when set to blinking
     if (this->m_blinking && (interval != 0)) {
@@ -717,9 +724,8 @@ void Led ::parameterUpdated(FwPrmIdType id) {
         case PARAMID_BLINK_INTERVAL: {
             // Read back the parameter value
             const U32 interval = this->paramGet_BLINK_INTERVAL(isValid);
-            
-            // Force interval to be 1 when invalid or not set
-            interval = ((Fw::ParamValid::INVALID == isValid) || (Fw::ParamValid::UNINIT == isValid)) ? 1 : interval;
+            // NOTE: isValid is always VALID in parameterUpdated as it was just properly set
+            FW_ASSERT(isValid == Fw::ParamValid::VALID, static_cast<FwAssertArgType>(isValid));
 
             // Emit the blink interval set event
             // TODO: Emit an event with, severity activity high, named BlinkIntervalSet that takes in an argument of
