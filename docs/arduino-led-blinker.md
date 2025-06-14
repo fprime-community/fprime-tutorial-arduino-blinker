@@ -27,7 +27,7 @@ This tutorial is composed of the following steps:
 2. [Building for Arduino](#2-building-for-arduino-microcontrollers)
 3. [Component Design and Initial Implementation](#3-led-blinker-component-design-and-initial-implementation)
 4. [Initial Component Integration](#4-led-blinker-initial-component-integration)
-5. [Continuing Component Implementation](#5-led-blinker-continuing-component-implementation)
+5. [Continuing Component Implementation](#5-led-blinker-component-design-and-implementation-continued)
 6. [Full System Integration](#6-led-blinker-full-system-integration)
 7. [Running on Hardware](#7-led-blinker-running-on-hardware)
 
