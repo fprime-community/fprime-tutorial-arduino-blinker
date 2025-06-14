@@ -852,11 +852,11 @@ Now it is time to run on hardware. Ensure the microcontroller is connected to th
 
 First, upload the binary file to the board after building. Reference the [board list](https://github.com/fprime-community/fprime-arduino/blob/main/docs/board-list.md) for guidance on uploading the binaries for your board.
 
-Next run the F´ GDS without launching the native compilation (`-n`) and with the dictionary from the build above (`--dictionary ./build-artifacts/teensy41/LedBlinkerTopologyDictionary.json`). Connect it to the USB device by adding the `--communication-selection`, `--uart-device`, and `--uart-baud` flags
+Next run the F´ GDS without launching the native compilation (`-n`) and with the dictionary from the build above (`--dictionary ./build-artifacts/teensy41/LedBlinker/dict/LedBlinkerTopologyDictionary.json`). Connect it to the USB device by adding the `--communication-selection`, `--uart-device`, and `--uart-baud` flags
 
 ```sh
 # In the project root
-fprime-gds -n --dictionary ./build-artifacts/teensy41/LedBlinker/dict/LedBlinkerTopologyAppDictionary.xml --communication-selection uart --uart-device /dev/ttyACM0 --uart-baud 115200
+fprime-gds -n --dictionary ./build-artifacts/teensy41/LedBlinker/dict/LedBlinkerTopologyDictionary.json --communication-selection uart --uart-device /dev/ttyACM0 --uart-baud 115200
 ```
 
 > [!Note]
