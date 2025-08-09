@@ -1,3 +1,6 @@
+add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/ComFprimeConfig")
+add_fprime_subdirectory("${CMAKE_CURRENT_LIST_DIR}/ComCcsdsConfig")
+
 register_fprime_config(
     CONFIGURATION_OVERRIDES
         "${CMAKE_CURRENT_LIST_DIR}/AcConstants.fpp"

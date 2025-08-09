@@ -10,6 +10,13 @@
 #include "LedBlinker/Top/FppConstantsAc.hpp"
 #include "Svc/FramingProtocol/FprimeProtocol.hpp"
 
+// SubtopologyTopologyDefs includes
+#include "Svc/Subtopologies/ComFprime/SubtopologyTopologyDefs.hpp"
+
+//ComFprime Enum Includes
+#include "Svc/Subtopologies/ComFprime/Ports_ComPacketQueueEnumAc.hpp"
+#include "Svc/Subtopologies/ComFprime/Ports_ComBufferQueueEnumAc.hpp"
+
 // Definitions are placed within a namespace named after the deployment
 namespace LedBlinker {
 
