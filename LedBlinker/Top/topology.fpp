@@ -89,7 +89,6 @@ module LedBlinker {
 
       # ComStub <-> CommDriver
       comStub.drvSendOut      -> commDriver.$send
-      commDriver.sendReturnOut -> comStub.drvSendReturnIn
       commDriver.ready         -> comStub.drvConnected
     }
     

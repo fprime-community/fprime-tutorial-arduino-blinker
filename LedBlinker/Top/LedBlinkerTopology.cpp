@@ -10,7 +10,7 @@
 #include <config/FppConstantsAc.hpp>
 
 // Necessary project-specified types
-#include <config/FprimeArduino.hpp>
+#include <Arduino/config/FprimeArduino.hpp>
 #include <Fw/Types/MallocAllocator.hpp>
 #include <Svc/FrameAccumulator/FrameDetector/FprimeFrameDetector.hpp>
 
