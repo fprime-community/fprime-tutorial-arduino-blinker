@@ -11,8 +11,6 @@
 
 // Necessary project-specified types
 #include <Arduino/config/FprimeArduino.hpp>
-#include <Fw/Types/MallocAllocator.hpp>
-#include <Svc/FrameAccumulator/FrameDetector/FprimeFrameDetector.hpp>
 
 // Allows easy reference to objects in FPP/autocoder required namespaces
 using namespace LedBlinker;
