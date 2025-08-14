@@ -29,11 +29,11 @@ module ComCcsdsConfig {
 
     # Buffer management constants
     module BuffMgr {
-        constant frameAccumulatorSize  = 2048     
+        constant frameAccumulatorSize  = 256     
         constant commsBuffSize         = 140      
-        constant commsFileBuffSize     = 140      
-        constant commsBuffCount        = 3        
-        constant commsFileBuffCount    = 3       
-        constant commsBuffMgrId        = 200      
+        constant commsFileBuffSize     = 0      
+        constant commsBuffCount        = 3      
+        constant commsFileBuffCount    = 0        
+        constant commsBuffMgrId        = 200     
     }
 }
