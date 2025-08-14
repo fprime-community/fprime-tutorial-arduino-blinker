@@ -282,6 +282,9 @@ Verify your component is building correctly by running the following command in 
 fprime-util build
 ```
 
+> [!TIP]
+> Append the flag `-j4` or `-j8` to build faster with more cores
+
 > [!NOTE]
 > Fix any errors that occur before proceeding with the rest of the tutorial.
 
@@ -551,7 +554,7 @@ Below is a table with a task you must complete before moving on to the next sect
 
 | Task | Solution |
 |-------|-------------|
-| 1. Add a telemetry channel `LedTransitions` of type `U64` to Led.fpp. | <details><summary>Answer</summary>`telemetry LedTransitions: U64`</details> |
+| 1. Add a telemetry channel `LedTransitions` of type `U64` to count LED Transitions to `Led.fpp`. | <details><summary>Answer</summary>`telemetry LedTransitions: U64`</details> |
 
 #### Parameters
 
@@ -812,7 +815,7 @@ We can create a named connections block in the topology and connect the two port
 To do this, add the following lines to `led-blinker/LedBLinker/Top/topology.fpp`:
 ```
     # Named connection group
-    connections LedConnections {
+    connections LedBlinker {
       # Rate Group 1 (1Hz cycle) ouput is connected to led's run input
       rateGroup1.RateGroupMemberOut[3] -> led.run
       # led's gpioSet output is connected to gpioDriver's gpioWrite input
