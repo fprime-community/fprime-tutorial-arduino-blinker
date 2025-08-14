@@ -57,7 +57,7 @@ class Led final : public LedComponentBase {
     Fw::On m_state = Fw::On::OFF;  //! Keeps track if LED is on or off
     U64 m_transitions = 0;         //! The number of on/off transitions that have occurred from FSW boot up
     U32 m_toggleCounter = 0;       //! Keeps track of how many ticks the LED has been on for
-    bool m_blinking = false;       //! Flag: if true then LED blinking will occur else no blinking will happen
+    bool m_blinking = true;       //! Flag: if true then LED blinking will occur else no blinking will happen
 };
 
 }  // namespace Components

@@ -4,7 +4,7 @@
 #include <Fw/FPrimeBasicTypes.hpp>
 
 namespace Svc {
-    static const U16 BUFFERMGR_MAX_NUM_BINS = 1;
+    static const U16 BUFFERMGR_MAX_NUM_BINS = 2;
 }
 
 
