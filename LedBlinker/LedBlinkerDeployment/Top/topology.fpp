@@ -8,13 +8,14 @@ module LedBlinker {
       rateGroup1
     }
 
-  topology LedBlinker {
+  topology LedBlinkerDeployment {
 
     # ----------------------------------------------------------------------
     # Subtopology imports
     # ----------------------------------------------------------------------
 
-    import ComFprime.Subtopology
+
+    import ComCcsds.Subtopology
 
     # ----------------------------------------------------------------------
     # Instances used in the topology
@@ -58,35 +59,36 @@ module LedBlinker {
 
       # Rate group 1
       rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup1] -> rateGroup1.CycleIn
-      rateGroup1.RateGroupMemberOut[0] -> comDriver.schedIn
-      rateGroup1.RateGroupMemberOut[1] -> tlmSend.Run
-      rateGroup1.RateGroupMemberOut[2] -> systemResources.run
+      rateGroup1.RateGroupMemberOut[0] -> tlmSend.Run
+      rateGroup1.RateGroupMemberOut[1] -> systemResources.run
+      rateGroup1.RateGroupMemberOut[2] -> comDriver.schedIn
     }
 
     connections FaultProtection {
       eventLogger.FatalAnnounce -> fatalHandler.FatalReceive
     }
 
+
     connections Communications {
       # Inputs to ComQueue (events, telemetry, file)
-      eventLogger.PktSend -> ComFprime.comQueue.comPacketQueueIn[ComFprime.Ports_ComPacketQueue.EVENTS]
-      tlmSend.PktSend     -> ComFprime.comQueue.comPacketQueueIn[ComFprime.Ports_ComPacketQueue.TELEMETRY]
+      eventLogger.PktSend -> ComCcsds.comQueue.comPacketQueueIn[ComCcsds.Ports_ComPacketQueue.EVENTS]
+      tlmSend.PktSend     -> ComCcsds.comQueue.comPacketQueueIn[ComCcsds.Ports_ComPacketQueue.TELEMETRY]
 
       # ComDriver buffer allocations
-      comDriver.allocate      -> ComFprime.commsBufferManager.bufferGetCallee
-      comDriver.deallocate    -> ComFprime.commsBufferManager.bufferSendIn
+      comDriver.allocate      -> ComCcsds.commsBufferManager.bufferGetCallee
+      comDriver.deallocate    -> ComCcsds.commsBufferManager.bufferSendIn
       
       # ComDriver <-> ComStub (Uplink)
-      comDriver.$recv                     -> ComFprime.comStub.drvReceiveIn
-      ComFprime.comStub.drvReceiveReturnOut -> comDriver.recvReturnIn
+      comDriver.$recv                     -> ComCcsds.comStub.drvReceiveIn
+      ComCcsds.comStub.drvReceiveReturnOut -> comDriver.recvReturnIn
       
       # ComStub <-> ComDriver (Downlink)
-      ComFprime.comStub.drvSendOut      -> comDriver.$send
-      comDriver.ready         -> ComFprime.comStub.drvConnected
+      ComCcsds.comStub.drvSendOut      -> comDriver.$send
+      comDriver.ready         -> ComCcsds.comStub.drvConnected
 
       # Router <-> CmdDispatcher
-      ComFprime.fprimeRouter.commandOut  -> cmdDisp.seqCmdBuff
-      cmdDisp.seqCmdStatus     -> ComFprime.fprimeRouter.cmdResponseIn
+      ComCcsds.fprimeRouter.commandOut  -> cmdDisp.seqCmdBuff
+      cmdDisp.seqCmdStatus     -> ComCcsds.fprimeRouter.cmdResponseIn
     }
 
     connections LedConnections {
@@ -96,7 +98,7 @@ module LedBlinker {
       led.gpioSet -> gpioDriver.gpioWrite
     }
 
-    connections LedBlinker {
+    connections LedBlinkerDeployment {
       # Add here connections to user-defined components
     }
 

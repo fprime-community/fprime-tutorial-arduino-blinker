@@ -4,14 +4,16 @@
 //
 // ======================================================================
 // Used to access topology functions
-#include <LedBlinker/Top/LedBlinkerTopologyAc.hpp>
-#include <LedBlinker/Top/LedBlinkerTopology.hpp>
+#include <LedBlinker/LedBlinkerDeployment/Top/LedBlinkerDeploymentTopology.hpp>
+// OSAL initialization
+#include <Os/Os.hpp>
 
 // Used for Baremetal TaskRunner
 #include <fprime-baremetal/Os/TaskRunner/TaskRunner.hpp>
 
 // Used for logging
 #include <Arduino/Os/Console.hpp>
+
 
 /**
  * \brief setup the program
@@ -32,8 +34,9 @@ void setup() {
     inputs.uartNumber = 0;
     inputs.uartBaud = 115200;
 
-    // Setup topology
+    // Setup and cycle topology
     LedBlinker::setupTopology(inputs);
+    LedBlinker::startRateGroups(Fw::TimeInterval(0, 1));
 
     Fw::Logger::log("Program Started\n");
 }
