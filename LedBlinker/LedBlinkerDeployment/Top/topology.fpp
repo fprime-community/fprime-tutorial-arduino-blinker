@@ -15,7 +15,7 @@ module LedBlinker {
     # ----------------------------------------------------------------------
 
 
-    import ComCcsds.Subtopology
+    import ComFprime.Subtopology
 
     # ----------------------------------------------------------------------
     # Instances used in the topology
@@ -71,24 +71,24 @@ module LedBlinker {
 
     connections Communications {
       # Inputs to ComQueue (events, telemetry, file)
-      eventLogger.PktSend -> ComCcsds.comQueue.comPacketQueueIn[ComCcsds.Ports_ComPacketQueue.EVENTS]
-      tlmSend.PktSend     -> ComCcsds.comQueue.comPacketQueueIn[ComCcsds.Ports_ComPacketQueue.TELEMETRY]
+      eventLogger.PktSend -> ComFprime.comQueue.comPacketQueueIn[ComFprime.Ports_ComPacketQueue.EVENTS]
+      tlmSend.PktSend     -> ComFprime.comQueue.comPacketQueueIn[ComFprime.Ports_ComPacketQueue.TELEMETRY]
 
       # ComDriver buffer allocations
-      comDriver.allocate      -> ComCcsds.commsBufferManager.bufferGetCallee
-      comDriver.deallocate    -> ComCcsds.commsBufferManager.bufferSendIn
+      comDriver.allocate      -> ComFprime.commsBufferManager.bufferGetCallee
+      comDriver.deallocate    -> ComFprime.commsBufferManager.bufferSendIn
       
       # ComDriver <-> ComStub (Uplink)
-      comDriver.$recv                     -> ComCcsds.comStub.drvReceiveIn
-      ComCcsds.comStub.drvReceiveReturnOut -> comDriver.recvReturnIn
+      comDriver.$recv                     -> ComFprime.comStub.drvReceiveIn
+      ComFprime.comStub.drvReceiveReturnOut -> comDriver.recvReturnIn
       
       # ComStub <-> ComDriver (Downlink)
-      ComCcsds.comStub.drvSendOut      -> comDriver.$send
-      comDriver.ready         -> ComCcsds.comStub.drvConnected
+      ComFprime.comStub.drvSendOut      -> comDriver.$send
+      comDriver.ready         -> ComFprime.comStub.drvConnected
 
       # Router <-> CmdDispatcher
-      ComCcsds.fprimeRouter.commandOut  -> cmdDisp.seqCmdBuff
-      cmdDisp.seqCmdStatus     -> ComCcsds.fprimeRouter.cmdResponseIn
+      ComFprime.fprimeRouter.commandOut  -> cmdDisp.seqCmdBuff
+      cmdDisp.seqCmdStatus     -> ComFprime.fprimeRouter.cmdResponseIn
     }
 
     connections LedConnections {

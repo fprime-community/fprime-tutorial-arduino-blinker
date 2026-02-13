@@ -4,6 +4,7 @@
 //
 // ======================================================================
 // Used to access topology functions
+#include <LedBlinker/LedBlinkerDeployment/Top/LedBlinkerDeploymentTopologyAc.hpp>
 #include <LedBlinker/LedBlinkerDeployment/Top/LedBlinkerDeploymentTopology.hpp>
 // OSAL initialization
 #include <Os/Os.hpp>
@@ -49,7 +50,7 @@ void setup() {
  */
 void loop() {
 #ifdef USE_BASIC_TIMER
-    rateDriver.cycle();
+    LedBlinker::rateDriver.cycle();
 #endif
     Os::Baremetal::TaskRunner::getSingleton().run();
 }
