@@ -4,14 +4,17 @@ module ComCcsdsConfig {
     
     module QueueSizes {
         constant comQueue    = 3
+        constant aggregator  = 5
     }
     
     module StackSizes {
         constant comQueue   = 64 * 1024
+        constant aggregator = 64 * 1024
     }
 
     module Priorities {
-        constant comQueue   = 101
+        constant aggregator = 30
+        constant comQueue   = 29
     }
 
     # Queue configuration constants
@@ -29,11 +32,11 @@ module ComCcsdsConfig {
 
     # Buffer management constants
     module BuffMgr {
-        constant frameAccumulatorSize  = 256     
-        constant commsBuffSize         = 140      
-        constant commsFileBuffSize     = 0      
-        constant commsBuffCount        = 3      
-        constant commsFileBuffCount    = 0        
-        constant commsBuffMgrId        = 200     
+        constant frameAccumulatorSize  = 2048     
+        constant commsBuffSize         = 155      
+        constant commsFileBuffSize     = 155      
+        constant commsBuffCount        = 3        
+        constant commsFileBuffCount    = 3       
+        constant commsBuffMgrId        = 200      
     }
 }

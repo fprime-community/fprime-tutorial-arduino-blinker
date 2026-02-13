@@ -1,16 +1,14 @@
 // ======================================================================
-// \title  LedBlinkerTopology.hpp
+// \title  LedBlinkerDeploymentTopology.hpp
 // \brief header file containing the topology instantiation definitions
 //
 // ======================================================================
-#ifndef LEDBLINKER_LEDBLINKERTOPOLOGY_HPP
-#define LEDBLINKER_LEDBLINKERTOPOLOGY_HPP
-// Included for access to LedBlinker::TopologyState and LedBlinker::ConfigObjects::pingEntries. These definitions are required by the
+#ifndef LEDBLINKERDEPLOYMENT_LEDBLINKERDEPLOYMENTTOPOLOGY_HPP
+#define LEDBLINKERDEPLOYMENT_LEDBLINKERDEPLOYMENTTOPOLOGY_HPP
+// Included for access to LedBlinkerDeployment::TopologyState and LedBlinkerDeployment::ConfigObjects::pingEntries. These definitions are required by the
 // autocoder, but are also used in this hand-coded topology.
-#include <LedBlinker/Top/LedBlinkerTopologyDefs.hpp>
+#include <LedBlinker/LedBlinkerDeployment/Top/LedBlinkerDeploymentTopologyDefs.hpp>
 
-// Remove unnecessary LedBlinker:: qualifications
-using namespace LedBlinker;
 namespace LedBlinker {
 /**
  * \brief initialize and run the F´ topology
@@ -32,9 +30,9 @@ namespace LedBlinker {
  * custom tasks often start radio communication it is convenient to start them last.
  *
  * The state argument carries command line inputs used to setup the topology. For an explanation of the required type
- * LedBlinker::TopologyState see: LedBlinkerTopologyDefs.hpp.
+ * LedBlinkerDeployment::TopologyState see: LedBlinkerDeploymentTopologyDefs.hpp.
  *
- * \param state: object shuttling CLI arguments (hostname, port) needed to construct the topology
+ * \param state: object shuttling CLI arguments (e.g. hostname/port, or UART baudrate) needed to construct the topology
  */
 void setupTopology(const TopologyState& state);
 
@@ -58,6 +56,27 @@ void setupTopology(const TopologyState& state);
  * \param state: state object provided to setupTopology
  */
 void teardownTopology(const TopologyState& state);
+
+/**
+ * \brief cycle the rate group driver at a crude rate
+ *
+ * The reference topology does not have a true 1Hz input clock for the rate group driver because it is designed to
+ * operate across various computing endpoints (e.g. laptops) where a clear 1Hz source may not be easily and generically
+ * achieved. This function mimics the cycling via a Task::delay(milliseconds) loop that manually invokes the ISR call
+ * to the example block driver.
+ *
+ *
+ * This loop is stopped via a stopRateGroups call.
+ *
+ */
+void startRateGroups(const Fw::TimeInterval& interval = Fw::TimeInterval(1,0));
+
+/**
+ * \brief stop the rate groups 
+ *
+ * This stops the cycle started by startRateGroups.
+ */
+void stopRateGroups();
 
 } // namespace LedBlinker
 #endif

@@ -8,11 +8,12 @@ module LedBlinker {
       rateGroup1
     }
 
-  topology LedBlinker {
+  topology LedBlinkerDeployment {
 
     # ----------------------------------------------------------------------
     # Subtopology imports
     # ----------------------------------------------------------------------
+
 
     import ComFprime.Subtopology
 
@@ -58,14 +59,15 @@ module LedBlinker {
 
       # Rate group 1
       rateGroupDriver.CycleOut[Ports_RateGroups.rateGroup1] -> rateGroup1.CycleIn
-      rateGroup1.RateGroupMemberOut[0] -> comDriver.schedIn
-      rateGroup1.RateGroupMemberOut[1] -> tlmSend.Run
-      rateGroup1.RateGroupMemberOut[2] -> systemResources.run
+      rateGroup1.RateGroupMemberOut[0] -> tlmSend.Run
+      rateGroup1.RateGroupMemberOut[1] -> systemResources.run
+      rateGroup1.RateGroupMemberOut[2] -> comDriver.schedIn
     }
 
     connections FaultProtection {
       eventLogger.FatalAnnounce -> fatalHandler.FatalReceive
     }
+
 
     connections Communications {
       # Inputs to ComQueue (events, telemetry, file)
@@ -96,7 +98,7 @@ module LedBlinker {
       led.gpioSet -> gpioDriver.gpioWrite
     }
 
-    connections LedBlinker {
+    connections LedBlinkerDeployment {
       # Add here connections to user-defined components
     }
 

@@ -29,11 +29,11 @@ module ComFprimeConfig {
 
     # Buffer management constants
     module BuffMgr {
-        constant frameAccumulatorSize  = 256     
-        constant commsBuffSize         = 140      
-        constant commsFileBuffSize     = 0      
+        constant frameAccumulatorSize  = 2048     
+        constant commsBuffSize         = 256      
+        constant commsFileBuffSize     = 256      
         constant commsBuffCount        = 3      
-        constant commsFileBuffCount    = 0        
+        constant commsFileBuffCount    = 3        
         constant commsBuffMgrId        = 200      
     }
 }

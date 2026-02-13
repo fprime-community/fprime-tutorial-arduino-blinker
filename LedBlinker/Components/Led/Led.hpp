@@ -7,9 +7,9 @@
 #ifndef Components_Led_HPP
 #define Components_Led_HPP
 
-#include "Components/Led/LedComponentAc.hpp"
+#include "LedBlinker/Components/Led/LedComponentAc.hpp"
 
-namespace Components {
+namespace LedBlinker {
 
 class Led final : public LedComponentBase {
   public:
@@ -60,6 +60,6 @@ class Led final : public LedComponentBase {
     bool m_blinking = true;       //! Flag: if true then LED blinking will occur else no blinking will happen
 };
 
-}  // namespace Components
+}  // namespace LedBlinker
 
 #endif
