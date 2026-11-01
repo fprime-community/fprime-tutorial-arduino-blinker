@@ -28,7 +28,7 @@ module LedBlinker {
     stack size Default.STACK_SIZE \
     priority 97
 
-  instance led: Components.Led base id 0x0E00 \
+  instance led: LedBlinker.Led base id 0x0E00 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
     priority 95
@@ -43,6 +43,7 @@ module LedBlinker {
 
   instance rateGroup1: Svc.PassiveRateGroup base id 0x1000
 
+  @ Communications driver. May be swapped with other com drivers like Arduino.StreamDriver, Arduino.TcpServer, or Arduino.TcpClient.
   instance comDriver: Arduino.StreamDriver base id 0x4000
 
   instance fatalHandler: Baremetal.FatalHandler base id 0x4300

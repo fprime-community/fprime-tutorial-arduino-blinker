@@ -3,7 +3,7 @@ module ComFprimeConfig {
     constant BASE_ID = 0x03000000
     
     module QueueSizes {
-        constant comQueue    = 3
+        constant comQueue    = 10
     }
     
     module StackSizes {
@@ -12,6 +12,10 @@ module ComFprimeConfig {
 
     module Priorities {
         constant comQueue   = 101
+    }
+
+    module CpuAffinities {
+        constant comQueue   = Os.TASK_DEFAULT
     }
 
     # Queue configuration constants
@@ -33,7 +37,7 @@ module ComFprimeConfig {
         constant commsBuffSize         = 140      
         constant commsFileBuffSize     = 0      
         constant commsBuffCount        = 3      
-        constant commsFileBuffCount    = 0        
+        constant commsFileBuffCount    = 0
         constant commsBuffMgrId        = 200      
     }
 }

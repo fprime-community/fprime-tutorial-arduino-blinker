@@ -1,13 +1,13 @@
 // ======================================================================
-// \title  LedBlinkerTopology.hpp
+// \title  LedBlinkerDeploymentTopology.hpp
 // \brief header file containing the topology instantiation definitions
 //
 // ======================================================================
-#ifndef LEDBLINKER_LEDBLINKERTOPOLOGY_HPP
-#define LEDBLINKER_LEDBLINKERTOPOLOGY_HPP
+#ifndef LEDBLINKERDEPLOYMENT_LEDBLINKERDEPLOYMENTTOPOLOGY_HPP
+#define LEDBLINKERDEPLOYMENT_LEDBLINKERDEPLOYMENTTOPOLOGY_HPP
 // Included for access to LedBlinker::TopologyState and LedBlinker::ConfigObjects::pingEntries. These definitions are required by the
 // autocoder, but are also used in this hand-coded topology.
-#include <LedBlinker/Top/LedBlinkerTopologyDefs.hpp>
+#include <LedBlinker/LedBlinkerDeployment/Top/LedBlinkerDeploymentTopologyDefs.hpp>
 
 // Remove unnecessary LedBlinker:: qualifications
 using namespace LedBlinker;
@@ -32,7 +32,7 @@ namespace LedBlinker {
  * custom tasks often start radio communication it is convenient to start them last.
  *
  * The state argument carries command line inputs used to setup the topology. For an explanation of the required type
- * LedBlinker::TopologyState see: LedBlinkerTopologyDefs.hpp.
+ * LedBlinker::TopologyState see: LedBlinkerDeploymentTopologyDefs.hpp.
  *
  * \param state: object shuttling CLI arguments (hostname, port) needed to construct the topology
  */
@@ -53,7 +53,7 @@ void setupTopology(const TopologyState& state);
  * Step 1, 2, 3, and 4 must occur in-order as the tasks must be stopped before being joined. These tasks must be stopped
  * and joined before any active resources may be deallocated.
  *
- * For an explanation of the required type LedBlinker::TopologyState see: LedBlinkerTopologyDefs.hpp.
+ * For an explanation of the required type LedBlinker::TopologyState see: LedBlinkerDeploymentTopologyDefs.hpp.
  *
  * \param state: state object provided to setupTopology
  */

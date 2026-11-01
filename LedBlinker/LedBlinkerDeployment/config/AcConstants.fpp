@@ -13,7 +13,7 @@ constant PassiveRateGroupOutputPorts = 10
 constant RateGroupDriverRateGroupPorts = 3
 
 @ Used for command and registration ports
-constant CmdDispatcherComponentCommandPorts = 5
+constant CmdDispatcherComponentCommandPorts = 7
 
 @ Used for uplink/sequencer buffer/response ports
 constant CmdDispatcherSequencePorts = 1
@@ -45,26 +45,32 @@ constant BufferRepeaterOutputPorts = 10
 @ Size of port array for DpManager
 constant DpManagerNumPorts = 5
 
+@ Size of data product routing port arrays for DpWriter
+constant DpWriterNumPorts = 5
+
 @ Size of processing port array for DpWriter
 constant DpWriterNumProcPorts = 5
 
 @ The size of a file name string
-constant FileNameStringSize = 200
+constant FileNameStringSize = 240
 
 @ The size of an assert text string
 constant FwAssertTextSize = 256
 
-@ The size of a file name in an AssertFatalAdapter event
-@ Note: File names in assertion failures are also truncated by
-@ the constants FW_ASSERT_TEXT_SIZE and FW_LOG_STRING_MAX_SIZE, set
-@ in FpConfig.h.
+@ The size of a file name in an AssertFatalAdapter event (leading-truncation:
+@ the tail of the path is kept)
+@ Note: Svc::AssertFatalAdapter truncates to the smaller of this constant and
+@ FW_LOG_STRING_MAX_SIZE (set in FpConstants.fpp), so raising this alone has no
+@ effect once it exceeds that bound. With the defaults (240 here, 200 there)
+@ FW_LOG_STRING_MAX_SIZE is what governs.
+@ FwAssertTextSize (in this file) is a separate bound on the console assert
+@ text, which also carries the timestamp and assert arguments.
 constant AssertFatalAdapterEventFileSize = FileNameStringSize
 
-# ----------------------------------------------------------------------
-# Hub connections. Connections on all deployments should mirror these settings.
-# ----------------------------------------------------------------------
-
-constant GenericHubInputPorts = 10
-constant GenericHubOutputPorts = 10
-constant GenericHubInputBuffers = 10
-constant GenericHubOutputBuffers = 10
+@ The maximum size in bytes of the argument blob carried in a Svc::SeqArgs buffer
+@ (CmdSeqIn / RUN / INVOKE).
+@ Deliberately kept small (rather than derived from FW_CMD_ARG_BUFFER_MAX_SIZE) to
+@ keep SeqArgs easy to populate from fprime-gds. It must still fit within
+@ FW_CMD_ARG_BUFFER_MAX_SIZE alongside the other command arguments it travels with
+@ (filename length prefix + fileName + BlockState + the SeqArgs size field).
+constant SequenceArgumentsMaxSize = 12

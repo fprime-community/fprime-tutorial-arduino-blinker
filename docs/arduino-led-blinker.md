@@ -42,7 +42,7 @@ An F´ Project ties to a specific version of tools to work with F´. In order to
 this project and install the correct version of tools, you should perform a bootstrap of F´:
 
 1. Ensure you meet the [F´ System Requirements](https://github.com/nasa/fprime?tab=readme-ov-file#system-requirements)
-2. [Bootstrap your F´ project](https://fprime.jpl.nasa.gov/latest/docs/getting-started/installing-fprime/#creating-a-new-f-project) with the name `arduino-led-blinker`
+2. [Bootstrap your F´ project](https://fprime.jpl.nasa.gov/latest/docs/getting-started/installing-fprime/#creating-a-new-f-project) with the repository name `arduino-led-blinker` and the top-level namespace `LedBlinker`
 
 Bootstrapping your F´ project created a folder called `arduino-led-blinker` (or any name you chose) containing the standard F´ project structure as well as the virtual environment up containing the tools to work with F´.
 
@@ -78,6 +78,9 @@ default_toolchain: teensy41
 
 > [!NOTE]
 > If you would like to use a different board as your default toolchain, you may change `teensy41` to your desired board. The list of available boards in the `fprime-arduino` toolchain can be found [here](https://github.com/fprime-community/fprime-arduino/blob/main/docs/board-list.md).
+
+> [!TIP]
+> If you use the [FPP extension for VS Code](https://marketplace.visualstudio.com/items?itemName=jet-propulsion-laboratory.fpp), point it at your board's build cache: in `arduino-led-blinker/.fpp-lsp`, change `build-fprime-automatic-native` to `build-fprime-automatic-teensy41` (or your board). After `fprime-util generate`, the extension's **FPP: Select Locs file inside workspace** command can also do this for you.
 
 Install `fprime-arduino` dependencies:
 ```sh
@@ -147,10 +150,9 @@ In this exercise, the `BLINKING_ON_OFF` command shall toggle the blinking state 
 1. `BLINKING_ON_OFF`: turn the LED blinking on/off
 
 **Events:**
-1. `InvalidBlinkArgument`: emitted when an invalid argument was supplied to the `BLINKING_ON_OFF` command
-2. `SetBlinkingState`: emitted when the component sets the blink state
-3. `BlinkIntervalSet`: emitted when the component blink interval parameter is set
-4. `LedState`: emitted when the LED is driven to a new state
+1. `SetBlinkingState`: emitted when the component sets the blink state
+2. `BlinkIntervalSet`: emitted when the component blink interval parameter is set
+3. `LedState`: emitted when the LED is driven to a new state
 
 **Telemetry Channels:**
 1. `BlinkingState`: state of the LED blinking
@@ -165,7 +167,7 @@ It is time to create the basic component. In a terminal, navigate to the project
 
 ```bash
 # In arduino-led-blinker
-cd Components
+cd LedBlinker/Components
 
 fprime-util new --component
 ```
@@ -175,7 +177,7 @@ You will be prompted for information regarding your component. Fill out the prom
 [INFO] Cookiecutter source: using builtin
   [1/8] Component name (MyComponent): Led
   [2/8] Component short description (Component for F Prime FSW framework.): Component to blink an LED driven by a rate group
-  [3/8] Component namespace (Components): Components
+  [3/8] Component namespace (LedBlinker): LedBlinker
   [4/8] Select component kind
     1 - active
     2 - passive
@@ -197,20 +199,20 @@ You will be prompted for information regarding your component. Fill out the prom
     1 - yes
     2 - no
     Choose from [1/2] (1): 1
-[INFO] Found CMake file at 'arduino-led-blinker/Components/CMakeLists.txt'
-Add Led to arduino-led-blinker/Components/CMakeLists.txt at end of file? (yes/no) [yes]: yes
+[INFO] Found CMake file at 'arduino-led-blinker/LedBlinker/Components/CMakeLists.txt'
+Add Led to arduino-led-blinker/LedBlinker/Components/CMakeLists.txt at end of file? (yes/no) [yes]: yes
 Generate implementation files? (yes/no) [yes]: yes
 Refreshing cache and generating implementation files...
 [INFO] Created new component and generated initial implementations.
 ```
-Your new component is located in the directory `arduinio-led-blinker/Components/Led`.
+Your new component is located in the directory `arduino-led-blinker/LedBlinker/Components/Led`.
 
 #### Commands
 
 Commands are used to command the component from the ground system or a command sequencer. We will add a command named `BLINKING_ON_OFF` to turn on or off the blinking LED. This command will take in an argument named `onOff` of type `Fw.On`.
 
 
-Inside your `arduino-led-blinker/Components/Led` directory, open the file `Led.fpp` and search for the following:
+Inside your `arduino-led-blinker/LedBlinker/Components/Led` directory, open the file `Led.fpp` and search for the following:
 
 ```
         # One async command/port is required for active components
@@ -232,7 +234,7 @@ Replace that block with the following:
 
 Events represent a log of system activities. Events are typically emitted any time the system takes an action. Events are also emitted to report off-nominal conditions.
 
-Inside your `arduino-led-blinker/Components/Led` directory, open the `Led.fpp` file. After the command you added in the previous section, add this event:
+Inside your `arduino-led-blinker/LedBlinker/Components/Led` directory, open the `Led.fpp` file. After the command you added in the previous section, add this event:
 
 ```
         @ Reports the state we set to blinking.
@@ -258,27 +260,27 @@ You have completed the Command and Event design phase. We'll move on to the Comm
 
 ### Component Implementation
 
-In the `arduino-led-blinker/Components/Led` directory, run the following:
+In the `arduino-led-blinker/LedBlinker/Components/Led` directory, run the following:
 
 ```bash
-# In arduino-led-blinker/Components/Led
+# In arduino-led-blinker/LedBlinker/Components/Led
 fprime-util impl
 ```
 
 This command will auto generate two files: `Led.template.hpp` and `Led.template.cpp`. These files contain the stub implementation for the component's newly added command.
 
-Since this is the start of the component's implementation, we can use the generated template files for our initial component implementation. Inside your `arduino-led-blinker/Components/Led` directory, rename `Led.template.hpp` to `Led.hpp` and rename `Led.template.cpp` to `Led.cpp`. You can rename the files through the terminal using the two commands below:
+Since this is the start of the component's implementation, we can use the generated template files for our initial component implementation. Inside your `arduino-led-blinker/LedBlinker/Components/Led` directory, rename `Led.template.hpp` to `Led.hpp` and rename `Led.template.cpp` to `Led.cpp`. You can rename the files through the terminal using the two commands below:
 
 ```bash
-# In arduino-led-blinker/Components/Led
+# In arduino-led-blinker/LedBlinker/Components/Led
 mv Led.template.hpp Led.hpp
 mv Led.template.cpp Led.cpp
 ```
 
-Verify your component is building correctly by running the following command in the `arduino-led-blinker/Components/Led` directory.
+Verify your component is building correctly by running the following command in the `arduino-led-blinker/LedBlinker/Components/Led` directory.
 
 ```bash
-# In arduino-led-blinker/Components/Led
+# In arduino-led-blinker/LedBlinker/Components/Led
 fprime-util build
 ```
 
@@ -292,7 +294,7 @@ fprime-util build
 
 Many of the behaviors of the component discussed in the [Component Design](#component-design) section require the tracking of some state. Before diving into the implementation of the behavior let us set up and initialize that state.
 
-Open `Led.hpp` in `arduino-led-blinker/Components/Led`, and add the following private member variables to the end of the file.
+Open `Led.hpp` in `arduino-led-blinker/LedBlinker/Components/Led`, and add the following private member variables to the end of the file.
 
 ```cpp
     Fw::On m_state = Fw::On::OFF; //! Keeps track if LED is on or off
@@ -301,10 +303,10 @@ Open `Led.hpp` in `arduino-led-blinker/Components/Led`, and add the following pr
     bool m_blinking = false; //! Flag: if true then LED blinking will occur else no blinking will happen
 ```
 
-Run the following in the `arduino-led-blinker/Components/Led` directory to verify your component is building correctly.
+Run the following in the `arduino-led-blinker/LedBlinker/Components/Led` directory to verify your component is building correctly.
 
 ```bash
-# In arduino-led-blinker/Components/Led
+# In arduino-led-blinker/LedBlinker/Components/Led
 fprime-util build
 ```
 
@@ -315,7 +317,7 @@ Now that the member variables are set up, we can continue into the component imp
 Now we will implement the behavior of the `BLINKING_ON_OFF` command. An initial implementation is shown below and may be copied into `Led.cpp` in-place of the BLINKING_ON_OFF command stub.
 
 ```cpp
-void Led ::BLINKING_ON_OFF_cmdHandler(FwOpcodeType opCode, U32 cmdSeq, Fw::On onOff) {
+void Led ::BLINKING_ON_OFF_cmdHandler(FwOpcodeType opCode, U32 cmdSeq, const Fw::On& onOff) {
     this->m_toggleCounter = 0;               // Reset count on any successful command
     this->m_blinking = Fw::On::ON == onOff;  // Update blinking state
 
@@ -332,7 +334,7 @@ void Led ::BLINKING_ON_OFF_cmdHandler(FwOpcodeType opCode, U32 cmdSeq, Fw::On on
 Run the following command in the terminal to verify your component is building correctly.
 
 ```bash
-# In arduino-led-blinker/Components/Led
+# In arduino-led-blinker/LedBlinker/Components/Led
 fprime-util build
 ```
 
@@ -341,7 +343,7 @@ fprime-util build
 
 #### Events
 
-Open `Led.cpp` in your `arduino-led-blinker/Components/Led` directory and navigate to the `BLINKING_ON_OFF` command. Report, via an event, the blinking state has been set.
+Open `Led.cpp` in your `arduino-led-blinker/LedBlinker/Components/Led` directory and navigate to the `BLINKING_ON_OFF` command. Report, via an event, the blinking state has been set.
 
 To do so, replace:
 ```cpp
@@ -357,7 +359,7 @@ with:
 Run the following to verify your component is building correctly.
 
 ```bash
-# In arduino-led-blinker/Components/Led
+# In arduino-led-blinker/LedBlinker/Components/Led
 fprime-util build
 ```
 
@@ -368,7 +370,7 @@ fprime-util build
 
 Congratulations!  You have now implemented some basic functionality in a new F´ component. Your command should look like this
 ```cpp
-void Led ::BLINKING_ON_OFF_cmdHandler(FwOpcodeType opCode, U32 cmdSeq, Fw::On onOff) {
+void Led ::BLINKING_ON_OFF_cmdHandler(FwOpcodeType opCode, U32 cmdSeq, const Fw::On& onOff) {
     this->m_toggleCounter = 0;               // Reset count on any successful command
     this->m_blinking = Fw::On::ON == onOff;  // Update blinking state
 
@@ -400,10 +402,11 @@ In this section, users will create a deployment and perform the initial integrat
 
 In order to produce an executable to run the software, users need to create a deployment. A deployment is one software executable that contains the main entry point, and an F´ system topology.
 
-Create a new deployment in the `arduino-led-blinker` directory with:
+Create a new deployment in the `arduino-led-blinker/LedBlinker` directory with:
 
 ```shell
 # In arduino-led-blinker
+cd LedBlinker
 fprime-util new --deployment
 ```
 
@@ -413,20 +416,25 @@ fprime-util new --deployment
 This will ask for some input, respond with the following answers:
 ```shell
 [INFO] Cookiecutter source: https://github.com/fprime-community/fprime-arduino-deployment-cookiecutter.git
-  [1/3] Deployment name (fprime-arduino-deployment): LedBlinker
-  [2/3] Select communication driver type
+  [1/5] Deployment name (fprime_arduino_deployment): LedBlinkerDeployment
+  [2/5] Deployment namespace (LedBlinker): LedBlinker
+  [3/5] Select communication driver type
     1 - UART
     2 - TcpServer
     3 - TcpClient
     Choose from [1/2/3] (1): 1
-  [3/3] Select file system type
+  [4/5] Select file system type
     1 - None
     2 - SD_Card
     3 - MicroFS
     Choose from [1/2/3] (1): 1
-[INFO] Found CMake file at 'arduino-led-blinker/project.cmake'
-Add LedBlinker to arduino-led-blinker/project.cmake at end of file? (yes/no) [yes]: yes
-[INFO] New deployment successfully created: /home/ethan/fprime-projects/arduino-led-blinker/LedBlinker
+  [5/5] Select framing protocol
+    1 - CCSDS
+    2 - Fprime
+    Choose from [1/2] (1): 1
+[INFO] Found CMake file at 'arduino-led-blinker/LedBlinker/CMakeLists.txt'
+Add LedBlinkerDeployment to arduino-led-blinker/LedBlinker/CMakeLists.txt at end of file? (yes/no) [yes]: yes
+[INFO] New deployment successfully created: /home/ethan/fprime-projects/arduino-led-blinker/LedBlinker/LedBlinkerDeployment
 ```
 > [!NOTE]
 > Use the default response for any other questions asked.
@@ -434,8 +442,8 @@ Add LedBlinker to arduino-led-blinker/project.cmake at end of file? (yes/no) [ye
 In order to check that the deployment was created successfully, the user can build the deployment. This will build the code for the current host system, not the remote embedded hardware allowing local testing during development. 
 
 ```shell
-# In arduino-led-blinker
-cd LedBlinker
+# In arduino-led-blinker/LedBlinker
+cd LedBlinkerDeployment
 fprime-util build
 ```
 
@@ -446,10 +454,10 @@ fprime-util build
 
 The component can now be added to the deployment's topology effectively adding this component to the running system. This is done by modifying `instances.fpp` and `topology.fpp` in the `Top` directory.
 
-Add the following to `arduino-led-blinker/LedBlinker/Top/instances.fpp`.  Typically, this is added to the "Active component instances" section of that document.
+Add the following to `arduino-led-blinker/LedBlinker/LedBlinkerDeployment/Top/instances.fpp`.  Typically, this is added to the "Active component instances" section of that document.
 
 ```
-  instance led: Components.Led base id 0x0E00 \
+  instance led: LedBlinker.Led base id 0x0E00 \
     queue size Default.QUEUE_SIZE \
     stack size Default.STACK_SIZE \
     priority 95
@@ -457,7 +465,7 @@ Add the following to `arduino-led-blinker/LedBlinker/Top/instances.fpp`.  Typica
 
 This defines an instance of the `Led` component called `led`. Since the component is active it needs a queue size, stack size, and priority for the thread of the component and the queue that thread serves. We have chosen the topology specified defaults and a priority of 95.
 
-Next, the topology needs to use the above definition. This is done by adding the `led` instance to the list of instances defined in `arduino-led-blinker/LedBlinker/Top/topology.fpp`:
+Next, the topology needs to use the above definition. This is done by adding the `led` instance to the list of instances defined in `arduino-led-blinker/LedBlinker/LedBlinkerDeployment/Top/topology.fpp`:
 
 ```
     # ----------------------------------------------------------------------
@@ -474,7 +482,7 @@ Build your deployment
 
 ```shell
 # In arduino-led-blinker
-cd LedBlinker
+cd LedBlinker/LedBlinkerDeployment
 fprime-util build
 ```
 
@@ -491,12 +499,12 @@ fprime-util build
 > 
 > For Windows WSL1 users, it should be along the lines of `/dev/ttyS1`, where `S1` indicates `COM1`. Determine the COM port of your board by running `usbipd` on PowerShell or looking it up in Windows Device Manager.
 
-First, you must upload the binary into your board. The binary is located in the `arduino-led-blinker/build-artifacts/<YOUR_TOOLCHAIN>/LedBlinker/bin/`. Refer to the upload guides in the [`board list`](https://github.com/fprime-community/fprime-arduino/blob/upgrade-to-fprime-4/docs/board-list.md) to upload the correct binary to your board of choice.
+First, you must upload the binary into your board. The binary is located in the `arduino-led-blinker/build-artifacts/<YOUR_TOOLCHAIN>/LedBlinker_LedBlinkerDeployment/bin/`. Refer to the upload guides in the [`board list`](https://github.com/fprime-community/fprime-arduino/blob/upgrade-to-fprime-4/docs/board-list.md) to upload the correct binary to your board of choice.
 
 Open the `fprime-gds` by running the following command:
 
 ```sh
-fprime-gds -n --dictionary ../build-artifacts/teensy41/LedBlinker/dict/LedBlinkerTopologyDictionary.json --communication-selection uart --uart-device /dev/ttyACM0 --uart-baud 115200
+fprime-gds -n --dictionary ../../build-artifacts/teensy41/LedBlinker_LedBlinkerDeployment/dict/LedBlinkerDeploymentTopologyDictionary.json --communication-selection uart --uart-device /dev/ttyACM0 --uart-baud 115200
 ```
 This will likely open up your browser and show the running flight software.  If it does not open a browser, navigate to `http://localhost:5000`.
 
@@ -516,12 +524,12 @@ Test the component integration with the following steps:
 
 Congratulations! You have now integrated your component and tested that integration.
 
-Return to the `arduino-led-blinker/LedBlinker` and run the following commands to test whenever you desire.
+Return to the `arduino-led-blinker/LedBlinker/LedBlinkerDeployment` and run the following commands to test whenever you desire.
 
 ```sh
-# In arduino-led-blinker/LedBlinker
+# In arduino-led-blinker/LedBlinker/LedBlinkerDeployment
 fprime-util build
-fprime-gds -n --dictionary ../build-artifacts/teensy41/LedBlinker/dict/LedBlinkerTopologyDictionary.json --communication-selection uart --uart-device /dev/ttyACM0 --uart-baud 115200
+fprime-gds -n --dictionary ../../build-artifacts/teensy41/LedBlinker_LedBlinkerDeployment/dict/LedBlinkerDeploymentTopologyDictionary.json --communication-selection uart --uart-device /dev/ttyACM0 --uart-baud 115200
 
 # CTRL-C to exit
 ```
@@ -541,7 +549,7 @@ In this section, we will complete the component design and implementation by add
 
 Telemetry channels represent the state of the system. Typically, telemetry channels are defined for any states that give crucial insight into the component's behavior.
 
-Inside your `arduino-led-blinker/Components/Led` directory, open the `Led.fpp` file. After the events you added in the previous section, add a telemetry channel of type `Fw.On` to report the blinking state.
+Inside your `arduino-led-blinker/LedBlinker/Components/Led` directory, open the `Led.fpp` file. After the events you added in the previous section, add a telemetry channel of type `Fw.On` to report the blinking state.
 
 ```
         @ Telemetry channel to report blinking state.
@@ -562,7 +570,7 @@ Parameters are ground-controllable settings for the system. Parameters are used 
 
 For each parameter you define in your fpp, the F´ autocoder will autogenerate a SET and SAVE command. The SET command allows ground to update the parameter. The SAVE command tells your parameter database to stage this new parameter value for saving. To save the parameter for use on a FSW reboot, ground will need to send the `PRM_SAVE_FILE` command.
 
-In your `arduino-led-blinker/Components/Led` directory, open the `Led.fpp` file. After the telemetry channels you added previously, add a parameter for the blinking interval. Give the parameter the name `BLINK_INTERVAL`, type `U32`, and a default value. It is good practice to assign parameters a valid default value.
+In your `arduino-led-blinker/LedBlinker/Components/Led` directory, open the `Led.fpp` file. After the telemetry channels you added previously, add a parameter for the blinking interval. Give the parameter the name `BLINK_INTERVAL`, type `U32`, and a default value. It is good practice to assign parameters a valid default value.
 
 ```
         @ Blinking interval in rate group ticks
@@ -573,7 +581,7 @@ In your `arduino-led-blinker/Components/Led` directory, open the `Led.fpp` file.
 
 Any communication between components should be accomplished through F´ ports. Thus far we have been using a set of standard ports for handling Commands, Telemetry, Events, and Parameters. This section will add two specific ports to our component: input `run` to be called from the rate group, and output `gpioSet` to drive the GPIO driver.
 
-In your `arduino-led-blinker/Components/Led` directory, open the `Led.fpp` file. After the parameters you added previously, add the following two ports:
+In your `arduino-led-blinker/LedBlinker/Components/Led` directory, open the `Led.fpp` file. After the parameters you added previously, add the following two ports:
 
 ```
         @ Port receiving calls from the rate group
@@ -590,14 +598,14 @@ In your `arduino-led-blinker/Components/Led` directory, open the `Led.fpp` file.
 
 #### Input Port Implementation
 
-In your `arduino-led-blinker/Components/Led` directory, run the following to autogenerate stub functions for the `run` input port we just added.
+In your `arduino-led-blinker/LedBlinker/Components/Led` directory, run the following to autogenerate stub functions for the `run` input port we just added.
 
 ```bash
-# In arduino-led-blinker/Components/Led
+# In arduino-led-blinker/LedBlinker/Components/Led
 fprime-util impl
 ```
 
-In your `arduino-led-blinker/Components/Led` directory, open `Led.template.hpp` file and copy this block over to `Led.hpp`.
+In your `arduino-led-blinker/LedBlinker/Components/Led` directory, open `Led.template.hpp` file and copy this block over to `Led.hpp`.
 
 ```cpp
   PRIVATE:
@@ -613,7 +621,7 @@ In your `arduino-led-blinker/Components/Led` directory, open `Led.template.hpp` 
                      ) override;
 ```
 
-In your `arduino-led-blinker/Components/Led` directory, open `Led.template.cpp` file and copy this block over to `Led.cpp`.
+In your `arduino-led-blinker/LedBlinker/Components/Led` directory, open `Led.template.cpp` file and copy this block over to `Led.cpp`.
 ```cpp
 // ----------------------------------------------------------------------
 // Handler implementations for user-defined typed input ports
@@ -681,7 +689,7 @@ void Led ::run_handler(FwIndexType portNum, U32 context) {
 In the terminal, run the following to verify your component is building correctly.
 
 ```bash
-# In arduino-led-blinker/Components/Led
+# In arduino-led-blinker/LedBlinker/Components/Led
 fprime-util build
 ```
 
@@ -690,7 +698,7 @@ fprime-util build
 
 #### Command Implementation Continued
 
-Inside your `arduino-led-blinker/Components/Led` directory, open `Led.cpp`, and navigate to the `BLINKING_ON_OFF` command. Report the blinking state via the telemetry channel we just added. To do so, replace the following:
+Inside your `arduino-led-blinker/LedBlinker/Components/Led` directory, open `Led.cpp`, and navigate to the `BLINKING_ON_OFF` command. Report the blinking state via the telemetry channel we just added. To do so, replace the following:
 
 ```cpp
       // TODO: Report the blinking state (onOff) on channel BlinkingState.
@@ -706,7 +714,7 @@ with the function to send the telemetry channel:
 In the terminal, run the following to verify your component is building correctly.
 
 ```bash
-# In arduino-led-blinker/Components/Led
+# In arduino-led-blinker/LedBlinker/Components/Led
 fprime-util build
 ```
 
@@ -717,7 +725,7 @@ fprime-util build
 
 When ground updates a component's parameter, the user may want the component to react to the parameter update. F Prime provides a function called `parameterUpdated` where your component can react to each parameter update. Implementing `parameterUpdated` for a component is optional but we'll implement it for this tutorial.
 
-In your `arduino-led-blinker/Components/Led` directory, open the file `Led.hpp` and add the following function signature in the `PRIVATE:` scope:
+In your `arduino-led-blinker/LedBlinker/Components/Led` directory, open the file `Led.hpp` and add the following function signature in the `PRIVATE:` scope:
 
 ```cpp
     //! Emit parameter updated EVR
@@ -728,7 +736,7 @@ In your `arduino-led-blinker/Components/Led` directory, open the file `Led.hpp` 
 
 > This function is called when a parameter is updated via the auto generated SET command. Although the value is updated automatically, this function gives developers a chance to respond to changing parameters. This tutorial uses it to emit an event.
 
-Save file and in your `arduino-led-blinker/Components/Led` directory, open `Led.cpp` and add the implementation for `parameterUpdated`:
+Save file and in your `arduino-led-blinker/LedBlinker/Components/Led` directory, open `Led.cpp` and add the implementation for `parameterUpdated`:
 
 ```cpp
 void Led ::parameterUpdated(FwPrmIdType id) {
@@ -755,7 +763,7 @@ void Led ::parameterUpdated(FwPrmIdType id) {
 In the terminal, run the following to verify your component is building correctly.
 
 ```bash
-# In arduino-led-blinker/Components/Led
+# In arduino-led-blinker/LedBlinker/Components/Led
 fprime-util build
 ```
 > [!NOTE]
@@ -793,44 +801,44 @@ Now it is time to add a GPIO driver to our system and attach it to the `led` com
 
 `fprime-arduino` provides a GPIO driver for Arduino microcontrollers called `Arduino.GpioDriver`. This should be added to both the instance definition list and the topology instance list just like we did for the `led` component. Since the GPIO driver is a passive component, its definition is a bit more simple.
 
-Add to "Passive Component" section of `led-blinker/LedBLinker/Top/instance.fpp`:
+Add to "Passive Component" section of `arduino-led-blinker/LedBlinker/LedBlinkerDeployment/Top/instances.fpp`:
 ```
     instance gpioDriver: Arduino.GpioDriver base id 0x5000
 ```
 
-Add to the instance list of `led-blinker/LedBlinker/Top/topology.fpp`:
+Add to the instance list of `arduino-led-blinker/LedBlinker/LedBlinkerDeployment/Top/topology.fpp`:
 ```
     instance gpioDriver
 ```
 
 > [!NOTE]
-> In `led-blinker/LedBlinker` build the deployment and resolve any errors before continuing.
+> In `arduino-led-blinker/LedBlinker/LedBlinkerDeployment` build the deployment and resolve any errors before continuing.
 
 ### Wiring The `led` Component Instance to the `gpioComponent` Component Instance and Rate Group
 
 The `Led` component defines the `gpioSet` output port and the `Arduino.GpioDriver` defines the `gpioWrite` input port. These two ports need to be connected from output to input. The `ActiveRateGroup` component defines an array of ports called `RateGroupMemberOut` and one of these needs to be connected to `run` port defined on the `Led` component.
 
-We can create a named connections block in the topology and connect the two port pairs. Remember to use the component instances and not the component definitions for each connection.
+We can connect the two port pairs in the topology's existing `LedBlinkerDeployment` connections block. Remember to use the component instances and not the component definitions for each connection.
 
-To do this, add the following lines to `led-blinker/LedBLinker/Top/topology.fpp`:
+To do this, add the following lines to the `connections LedBlinkerDeployment` block in `arduino-led-blinker/LedBlinker/LedBlinkerDeployment/Top/topology.fpp`:
 ```
-    # Named connection group
-    connections LedBlinker {
-      # Rate Group 1 (1Hz cycle) ouput is connected to led's run input
-      rateGroup1.RateGroupMemberOut[3] -> led.run
+    connections LedBlinkerDeployment {
+      # Add here connections to user-defined components
+      # Rate Group 1 (1Hz cycle) output is connected to led's run input
+      rateGroup1.RateGroupMemberOut[5] -> led.run
       # led's gpioSet output is connected to gpioDriver's gpioWrite input
       led.gpioSet -> gpioDriver.gpioWrite
     }
 ```
 
 > [!NOTE]
-> `rateGroup1` is preconfigured to call all `RateGroupMemberOut` at a rate of 1 Hz. We use index `RateGroupMemberOut[3]` because `RateGroupMemberOut[0]` through `RateGroupMemberOut[2]` were used previously in the `RateGroups` connection block.
+> `rateGroup1` is preconfigured to call all `RateGroupMemberOut` at a rate of 1 Hz. We use index `RateGroupMemberOut[5]` because `RateGroupMemberOut[0]` through `RateGroupMemberOut[4]` were used previously in the `RateGroups` connection block.
 
 ### Configuring The GPIO Driver
 
 So far the GPIO driver has been instantiated and wired, but has not been told what GPIO pin to control. For this tutorial, the built-in LED will be used. To configure this, the `open` function needs to be called in the topology's C++ implementation and passed the pin's number and direction.
 
-This is done by adding the following line to the end of the `configureTopology` function defined in `led-blinker/LedBLinker/Top/LedBLinkerTopology.cpp`.
+This is done by adding the following line to the end of the `configureTopology` function defined in `arduino-led-blinker/LedBlinker/LedBlinkerDeployment/Top/LedBlinkerDeploymentTopology.cpp`.
 
 ```
 void configureTopology() {
@@ -841,7 +849,7 @@ void configureTopology() {
 This code tells the GPIO driver to open pin `LED_BUILTIN` (usually pin 13) as an output pin. If your device does not have a built in LED, select a GPIO pin of your choice.
 
 > [!NOTE]
-> In `led-blinker/LedBlinker` build the deployment and resolve any errors before continuing.
+> In `arduino-led-blinker/LedBlinker/LedBlinkerDeployment` build the deployment and resolve any errors before continuing.
 
 ### LED Blinker Step 6 Conclusion
 
@@ -855,11 +863,11 @@ Now it is time to run on hardware. Ensure the microcontroller is connected to th
 
 First, upload the binary file to the board after building. Reference the [board list](https://github.com/fprime-community/fprime-arduino/blob/main/docs/board-list.md) for guidance on uploading the binaries for your board.
 
-Next run the F´ GDS without launching the native compilation (`-n`) and with the dictionary from the build above (`--dictionary ./build-artifacts/teensy41/LedBlinker/dict/LedBlinkerTopologyDictionary.json`). Connect it to the USB device by adding the `--communication-selection`, `--uart-device`, and `--uart-baud` flags
+Next run the F´ GDS without launching the native compilation (`-n`) and with the dictionary from the build above (`--dictionary ./build-artifacts/teensy41/LedBlinker_LedBlinkerDeployment/dict/LedBlinkerDeploymentTopologyDictionary.json`). Connect it to the USB device by adding the `--communication-selection`, `--uart-device`, and `--uart-baud` flags
 
 ```sh
 # In the project root
-fprime-gds -n --dictionary ./build-artifacts/teensy41/LedBlinker/dict/LedBlinkerTopologyDictionary.json --communication-selection uart --uart-device /dev/ttyACM0 --uart-baud 115200
+fprime-gds -n --dictionary ./build-artifacts/teensy41/LedBlinker_LedBlinkerDeployment/dict/LedBlinkerDeploymentTopologyDictionary.json --communication-selection uart --uart-device /dev/ttyACM0 --uart-baud 115200
 ```
 
 > [!Note]

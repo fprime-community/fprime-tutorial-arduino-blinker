@@ -7,6 +7,8 @@ register_fprime_config(
         "${CMAKE_CURRENT_LIST_DIR}/BufferManagerComponentImplCfg.hpp"
         "${CMAKE_CURRENT_LIST_DIR}/CommandDispatcherImplCfg.hpp"
         "${CMAKE_CURRENT_LIST_DIR}/FpConfig.h"
+        "${CMAKE_CURRENT_LIST_DIR}/FpConstants.fpp"
+        "${CMAKE_CURRENT_LIST_DIR}/PlatformCfg.fpp"
         "${CMAKE_CURRENT_LIST_DIR}/StaticMemoryConfig.hpp"
         "${CMAKE_CURRENT_LIST_DIR}/TlmChanImplCfg.hpp"
     INTERFACE

@@ -4,12 +4,12 @@
 // \brief  hpp file for Led component implementation class
 // ======================================================================
 
-#ifndef Components_Led_HPP
-#define Components_Led_HPP
+#ifndef LedBlinker_Led_HPP
+#define LedBlinker_Led_HPP
 
-#include "Components/Led/LedComponentAc.hpp"
+#include "LedBlinker/Components/Led/LedComponentAc.hpp"
 
-namespace Components {
+namespace LedBlinker {
 
 class Led final : public LedComponentBase {
   public:
@@ -51,15 +51,15 @@ class Led final : public LedComponentBase {
     //! Command to turn on or off the blinking LED
     void BLINKING_ON_OFF_cmdHandler(FwOpcodeType opCode,  //!< The opcode
                                     U32 cmdSeq,           //!< The command sequence number
-                                    Fw::On onOff          //!< Indicates whether the blinking should be on or off
+                                    const Fw::On& onOff   //!< Indicates whether the blinking should be on or off
                                     ) override;
 
     Fw::On m_state = Fw::On::OFF;  //! Keeps track if LED is on or off
     U64 m_transitions = 0;         //! The number of on/off transitions that have occurred from FSW boot up
     U32 m_toggleCounter = 0;       //! Keeps track of how many ticks the LED has been on for
-    bool m_blinking = true;       //! Flag: if true then LED blinking will occur else no blinking will happen
+    bool m_blinking = true;        //! Flag: if true then LED blinking will occur else no blinking will happen
 };
 
-}  // namespace Components
+}  // namespace LedBlinker
 
 #endif

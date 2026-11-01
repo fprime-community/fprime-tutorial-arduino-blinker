@@ -1,13 +1,12 @@
 // ======================================================================
-// \title  LedBlinkerTopology.cpp
+// \title  LedBlinkerDeploymentTopology.cpp
 // \brief cpp file containing the topology instantiation code
 //
 // ======================================================================
 // Provides access to autocoded functions
-#include <LedBlinker/Top/LedBlinkerTopologyAc.hpp>
-// Note: Uncomment when using Svc:TlmPacketizer
-// #include <LedBlinker/Top/LedBlinkerPacketsAc.hpp>
+#include <LedBlinker/LedBlinkerDeployment/Top/LedBlinkerDeploymentTopologyAc.hpp>
 #include <config/FppConstantsAc.hpp>
+#include <Fw/Logger/Logger.hpp>
 
 // Necessary project-specified types
 #include <Arduino/config/FprimeArduino.hpp>
@@ -20,7 +19,7 @@ Svc::RateGroupDriver::DividerSet rateGroupDivisors{{{100, 0}, {200, 0}, {1000, 0
 
 // Rate groups may supply a context token to each of the attached children whose purpose is set by the project. The
 // reference topology sets each token to zero as these contexts are unused in this project.
-U32 rateGroup1Context[FppConstant_PassiveRateGroupOutputPorts::PassiveRateGroupOutputPorts] = {};
+Svc::PassiveRateGroup::ContextArray rateGroup1Context(0);
 
 /**
  * \brief configure/setup components in project-specific way
@@ -34,12 +33,12 @@ void configureTopology() {
     rateGroupDriver.configure(rateGroupDivisors);
 
     // Rate groups require context arrays.
-    rateGroup1.configure(rateGroup1Context, FW_NUM_ARRAY_ELEMENTS(rateGroup1Context));
+    rateGroup1.configure(rateGroup1Context);
 
     gpioDriver.open(Arduino::DEF_LED_BUILTIN, Arduino::GpioDriver::GpioDirection::OUT);
 }
 
-// Public functions for use in main program are namespaced with deployment name LedBlinker
+// Public functions for use in main program are namespaced with deployment namespace LedBlinker
 namespace LedBlinker {
 void setupTopology(const TopologyState& state) {
     // Autocoded initialization. Function provided by autocoder.
@@ -59,9 +58,10 @@ void setupTopology(const TopologyState& state) {
     // loadParameters();
     // Autocoded task kick-off (active components). Function provided by autocoder.
     startTasks(state);
+
+    comDriver.configure(&Serial);
     
     rateDriver.configure(1);
-    comDriver.configure(&Serial);
     rateDriver.start();
 }
 

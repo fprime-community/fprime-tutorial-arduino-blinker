@@ -4,9 +4,9 @@
 // \brief  cpp file for Led component implementation class
 // ======================================================================
 
-#include "Components/Led/Led.hpp"
+#include "LedBlinker/Components/Led/Led.hpp"
 
-namespace Components {
+namespace LedBlinker {
 
 // ----------------------------------------------------------------------
 // Component construction and destruction
@@ -84,7 +84,7 @@ void Led ::run_handler(FwIndexType portNum, U32 context) {
 // Handler implementations for commands
 // ----------------------------------------------------------------------
 
-void Led ::BLINKING_ON_OFF_cmdHandler(FwOpcodeType opCode, U32 cmdSeq, Fw::On onOff) {
+void Led ::BLINKING_ON_OFF_cmdHandler(FwOpcodeType opCode, U32 cmdSeq, const Fw::On& onOff) {
     this->m_toggleCounter = 0;               // Reset count on any successful command
     this->m_blinking = Fw::On::ON == onOff;  // Update blinking state
 
@@ -96,4 +96,4 @@ void Led ::BLINKING_ON_OFF_cmdHandler(FwOpcodeType opCode, U32 cmdSeq, Fw::On on
     this->cmdResponse_out(opCode, cmdSeq, Fw::CmdResponse::OK);
 }
 
-}  // namespace Components
+}  // namespace LedBlinker
